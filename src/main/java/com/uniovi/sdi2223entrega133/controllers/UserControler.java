@@ -45,7 +45,7 @@ public class UserControler {
         }
         user.setRole(rolesService.getRoles()[0]);
         userService.addUser(user);
-        securityService.autoLogin(user.getMail(), user.getPasswordConfirm());
+        securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
         return "redirect:home";
     }
     @RequestMapping(value = "/login", method = RequestMethod.GET)

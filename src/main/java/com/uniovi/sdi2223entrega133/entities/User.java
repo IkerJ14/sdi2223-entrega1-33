@@ -9,6 +9,14 @@ public class User {
         return id;
     }
     public User() {
+        cartera = 100;
+    }
+
+    public User(String email, String nombre , String apellido) {
+        email = email;
+        this.name = nombre;
+        this.lastName = apellido;
+        cartera = 100;
     }
     public void setId(long id) {
         this.id = id;
@@ -59,22 +67,30 @@ public class User {
     @GeneratedValue
     private long id;
     @Column(unique = true)
-    private String mail;
+    private String email;
     private String name;
     private String lastName;
     private String password;
 
-    private String role;
+    public double getCartera() {
+        return cartera;
+    }
 
+    public void setCartera(double cartera) {
+        this.cartera = cartera;
+    }
+
+    private String role;
+    private double cartera;
     @Transient //propiedad que no se almacena en la tabla.
     private String passwordConfirm;
 
 
-    public String getMail() {
-        return mail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setEmail(String mail) {
+        this.email = mail;
     }
 }
