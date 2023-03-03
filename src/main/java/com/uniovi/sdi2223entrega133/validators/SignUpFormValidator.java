@@ -13,7 +13,7 @@ public class SignUpFormValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         User user = (User) target;
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dni", "Error.empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "mail", "Error.empty");
 
         if (user.getName().length() < 5 || user.getName().length() > 24) {
             errors.rejectValue("name", "Error.signup.name.length");}
