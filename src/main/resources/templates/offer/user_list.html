@@ -19,6 +19,7 @@
       <tr>
         <th scope="col" th:text="#{offer.title}"></th>
         <th scope="col" th:text="#{offer.detail}"></th>
+        <th scope="col" th:text="#{offer.date}"></th>
         <th scope="col" th:text="#{offer.price}"></th>
       </tr>
       </thead>
@@ -26,6 +27,7 @@
       <tr th:each="offer : ${userOfferList}">
         <td scope="row" th:text="${offer.title}"></td>
         <td scope="row" th:text="${offer.description}"></td>
+        <td scope="row" th:text="${offer.date}"></td>
         <td scope="row" th:text="${offer.price} + €"></td>
       </tr>
       </tbody>

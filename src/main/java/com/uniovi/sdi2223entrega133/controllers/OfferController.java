@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 
 @Controller
 public class OfferController {
@@ -56,6 +59,10 @@ public class OfferController {
         String email = principal.getName();
         User user = userService.getUserByEmail(email);
         offer.setUser(user);
+        // TODO: Check if form does not need a date field
+//        Calendar c = Calendar.getInstance();
+//        c.setTime(new Date());
+        offer.setDate(LocalDate.now());
 
         offersService.addOffer(offer);
         return "redirect:/offer/user_list";

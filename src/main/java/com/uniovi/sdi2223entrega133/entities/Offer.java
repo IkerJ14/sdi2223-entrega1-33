@@ -1,6 +1,7 @@
 package com.uniovi.sdi2223entrega133.entities;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -13,7 +14,7 @@ public class Offer {
     private String title;
 
     private String description;
-    private Date date;
+    private LocalDate date;
     private double price;
 
     @ManyToOne
@@ -24,7 +25,7 @@ public class Offer {
 
     }
 
-    public Offer(Long id, String description, Date date, double price) {
+    public Offer(Long id, String description, LocalDate date, double price) {
         this.id = id;
         this.description = description;
         this.date = date;
@@ -55,11 +56,11 @@ public class Offer {
         this.description = description;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
