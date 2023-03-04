@@ -1,6 +1,7 @@
 package com.uniovi.sdi2223entrega133.services;
 
 import com.uniovi.sdi2223entrega133.entities.Offer;
+import com.uniovi.sdi2223entrega133.entities.User;
 import com.uniovi.sdi2223entrega133.repositories.OffersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,5 +30,9 @@ public class OffersService {
 
     public void deleteOffer(Long id) {
         offersRepository.deleteById(id);
+    }
+
+    public List<Offer> getOffersByUser(User user) {
+        return offersRepository.findAllByUser(user);
     }
 }
