@@ -52,4 +52,15 @@ public class UserControler {
     public String login() {
         return "login";
     }
+
+    @RequestMapping("/user/list")
+    public String getList(Model model) {
+        model.addAttribute("usersList", userService.getUsers());
+        return "user/list";
+    }
+    @RequestMapping("/user/list/update")
+    public String updateList(Model model){
+        model.addAttribute("usersList", userService.getUsers() );
+        return "user/list :: tableUsers";
+    }
 }

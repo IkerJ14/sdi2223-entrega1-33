@@ -13,7 +13,7 @@ public class User {
     }
 
     public User(String email, String nombre , String apellido) {
-        email = email;
+        this.email = email;
         this.name = nombre;
         this.lastName = apellido;
         cartera = 100;
@@ -90,7 +90,7 @@ public class User {
         return email;
     }
 
-    public void setEmail(String mail) {
-        this.email = mail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
