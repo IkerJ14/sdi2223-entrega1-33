@@ -26,11 +26,12 @@ public class Offer {
     public Offer() {
     }
 
-    public Offer(Long id, String description, LocalDate date, double price) {
-        this.id = id;
+    public Offer(String title, String description, LocalDate date, double price, User user) {
+        this.title = title;
         this.description = description;
         this.date = date;
         this.price = price;
+        this.user = user;
     }
 
     public Long getId() {

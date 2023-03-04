@@ -21,8 +21,6 @@ public class OffersService {
     public Page<Offer> getOffers(Pageable pageable) {
         Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
         offers = offersRepository.findAll(pageable);
-        System.out.println(offers.getNumberOfElements());
-        System.out.println(offers.getContent().size());
         return offers;
     }
 

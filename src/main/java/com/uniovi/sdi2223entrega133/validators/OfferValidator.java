@@ -23,7 +23,7 @@ public class OfferValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "Error.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "price", "Error.empty");
 
-        if (offer.getDescription().length() < 20) {
+        if (offer.getDescription().length() < 10) {
             errors.rejectValue("description", "Error.offer.description.length");
         }
         if (offer.getPrice() < 0) {
