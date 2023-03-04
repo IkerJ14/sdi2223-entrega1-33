@@ -21,6 +21,7 @@
         <th scope="col" th:text="#{offer.detail}"></th>
         <th scope="col" th:text="#{offer.date}"></th>
         <th scope="col" th:text="#{offer.price}"></th>
+        <th scope="col"></th>
       </tr>
       </thead>
       <tbody>
@@ -29,6 +30,7 @@
         <td scope="row" th:text="${offer.description}"></td>
         <td scope="row" th:text="${offer.date}"></td>
         <td scope="row" th:text="${offer.price} + €"></td>
+        <td><a th:href="${'/offer/delete/' + offer.id}" th:text="#{offer.delete}"></a>
       </tr>
       </tbody>
     </table>

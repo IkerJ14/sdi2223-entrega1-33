@@ -17,12 +17,13 @@ public class Offer {
     private LocalDate date;
     private double price;
 
+    private boolean sold;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     public Offer() {
-
     }
 
     public Offer(Long id, String description, LocalDate date, double price) {
@@ -78,5 +79,13 @@ public class Offer {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public boolean isSold() {
+        return sold;
+    }
+
+    public void setSold(boolean sold) {
+        this.sold = sold;
     }
 }

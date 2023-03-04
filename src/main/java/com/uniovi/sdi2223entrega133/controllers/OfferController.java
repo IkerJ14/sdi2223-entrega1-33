@@ -7,19 +7,17 @@ import com.uniovi.sdi2223entrega133.services.UserService;
 import com.uniovi.sdi2223entrega133.validators.OfferValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.LinkedList;
 
 @Controller
 public class OfferController {
@@ -27,15 +25,33 @@ public class OfferController {
     private OffersService offersService;
 
     @Autowired
-    private UserService userService;
+    private UserService usersService;
 
     @Autowired
     private OfferValidator offerValidator;
 
-    @RequestMapping("/offer/user_list")
-    public String getList(Model model, Principal principal){
+    @RequestMapping("/offer/list")
+    public String getList(Pageable pageable, Model model, Principal principal,
+                          @RequestParam(value = "", required = false) String searchText){
         String email = principal.getName();
-        User user = userService.getUserByEmail(email);
+        User user = usersService.getUserByEmail(email);
+        Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
+        if (searchText != null && !searchText.isEmpty()) {
+            offers = offersService.searchOffersByTitle(pageable, searchText);
+        } else {
+            offers = offersService.getOffers(pageable);
+        }
+
+        model.addAttribute("offerList", offers.getContent());
+        model.addAttribute("page", offers);
+
+        return "offer/list";
+    }
+
+    @RequestMapping("/offer/user_list")
+    public String getUserList(Model model, Principal principal){
+        String email = principal.getName();
+        User user = usersService.getUserByEmail(email);
 
         model.addAttribute("userOfferList", offersService.getOffersByUser(user));
 
@@ -57,23 +73,42 @@ public class OfferController {
         }
 
         String email = principal.getName();
-        User user = userService.getUserByEmail(email);
+        User user = usersService.getUserByEmail(email);
         offer.setUser(user);
         // TODO: Check if form does not need a date field
-//        Calendar c = Calendar.getInstance();
-//        c.setTime(new Date());
         offer.setDate(LocalDate.now());
+        offer.setSold(false);
 
         offersService.addOffer(offer);
         return "redirect:/offer/user_list";
     }
 
+    @RequestMapping("/offer/delete/{id}")
+    public String deleteMark(@PathVariable Long id) {
+        offersService.deleteOffer(id);
+        return "redirect:/offer/user_list";
+    }
+
     @RequestMapping("/offer/user_list/update")
-    public String updateList(Model model, Principal principal) {
+    public String updateUserList(Model model, Principal principal) {
         String email = principal.getName();
-        User user = userService.getUserByEmail(email);
+        User user = usersService.getUserByEmail(email);
 
         model.addAttribute("userOfferList", offersService.getOffersByUser(user));
         return "offer/user_list :: tableUserOffers";
     }
+
+    @RequestMapping("/offer/list/update")
+    public String updateList(Pageable pageable, Model model, Principal principal) {
+        String email = principal.getName();
+        User user = usersService.getUserByEmail(email);
+        Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
+        offers = offersService.getOffers(pageable);
+
+        model.addAttribute("offerList", offers.getContent());
+        model.addAttribute("page", offers);
+
+        return "offer/list :: tableOffers";
+    }
+
 }
