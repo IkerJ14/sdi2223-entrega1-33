@@ -21,6 +21,7 @@
                 <th scope="col" th:text="#{login.mail}"></th>
                 <th scope="col" th:text="#{signup.name}"></th>
                 <th scope="col" th:text="#{signup.lastname}"></th>
+                <th scope="col" ></th>
             </tr>
             </thead>
             <tbody>
@@ -28,6 +29,9 @@
                 <td scope="row" th:text="${user.email}">aaa@gmail.com</td>
                 <td scope="row" th:text="${user.name}">Nombre del alumno</td>
                 <td scope="row" th:text="${user.lastName}">Apellidos del alumno</td>
+                <td>
+                    <input type="checkbox">
+                </td>
             </tr>
             </tbody>
         </table>
