@@ -1,6 +1,7 @@
 package com.uniovi.sdi2223entrega133.entities;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -9,22 +10,28 @@ public class Offer {
     @Id
     @GeneratedValue
     private Long id;
+
+    private String title;
+
     private String description;
-    private Date date;
+    private LocalDate date;
     private double price;
 
-    //TODO: Add User attribute
+    private boolean sold;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Offer() {
-
     }
 
-    public Offer(Long id, String description, Date date, double price) {
-        this.id = id;
+    public Offer(String title, String description, LocalDate date, double price, User user) {
+        this.title = title;
         this.description = description;
         this.date = date;
         this.price = price;
+        this.user = user;
     }
 
     public Long getId() {
@@ -35,6 +42,14 @@ public class Offer {
         this.id = id;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -43,11 +58,11 @@ public class Offer {
         this.description = description;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -57,5 +72,21 @@ public class Offer {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public boolean isSold() {
+        return sold;
+    }
+
+    public void setSold(boolean sold) {
+        this.sold = sold;
     }
 }

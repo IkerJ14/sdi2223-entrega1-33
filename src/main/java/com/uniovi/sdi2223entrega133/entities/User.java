@@ -1,9 +1,25 @@
 package com.uniovi.sdi2223entrega133.entities;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class User {
+
+    @Id
+    @GeneratedValue
+    private long id;
+    @Column(unique = true)
+    private String email;
+    private String name;
+    private String lastName;
+    private String password;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Offer> offers;
+    private String role;
+    private double cartera;
+    @Transient //propiedad que no se almacena en la tabla.
+    private String passwordConfirm;
 
     public long getId() {
         return id;
@@ -63,15 +79,6 @@ public class User {
         this.passwordConfirm = passwordConfirm;
     }
 
-    @Id
-    @GeneratedValue
-    private long id;
-    @Column(unique = true)
-    private String email;
-    private String name;
-    private String lastName;
-    private String password;
-
     public double getCartera() {
         return cartera;
     }
@@ -80,11 +87,6 @@ public class User {
         this.cartera = cartera;
     }
 
-    private String role;
-    private double cartera;
-    @Transient //propiedad que no se almacena en la tabla.
-    private String passwordConfirm;
-
 
     public String getEmail() {
         return email;
@@ -92,5 +94,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(Set<Offer> offers) {
+        this.offers = offers;
     }
 }

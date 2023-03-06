@@ -12,6 +12,16 @@
         <li class="nav-item ">
           <a class="nav-link" href="/home">Home<span class="sr-only">(current)</span></a>
         </li>
+        <li class="nav-item dropdown active">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false" th:text="#{offer.management}">
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/offer/list" th:text="#{offer.list}"></a>
+            <a class="dropdown-item" href="/offer/user_list" th:text="#{offer.self-offers}"></a>
+            <a class="dropdown-item" href="/offer/add" th:text="#{offer.add}"></a>
+          </div>
+        </li>
       </ul>
     </div>
     <div class="justify-content-end">

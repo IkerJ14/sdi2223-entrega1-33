@@ -16,7 +16,7 @@ import com.uniovi.sdi2223entrega133.validators.SignUpFormValidator;
 import com.uniovi.sdi2223entrega133.services.RolesService;
 
 @Controller
-public class UserControler {
+public class UserController {
     @Autowired
     private UserService userService;
     @Autowired

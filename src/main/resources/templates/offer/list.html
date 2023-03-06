@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body>
+<nav th:replace="fragments/nav"/>
+<div class="container" id="main-container">
+    <h2 th:text="#{offer.list-title}"></h2>
+    <form class="form-inline" action="/offer/list">
+        <div class="form-group">
+            <input name="searchText" type="text" class="form-control" size="50"
+                   th:placeholder="#{offer.search}">
+        </div>
+        <button type="submit" class="btn btn-primary" th:text="#{form.submit}"></button>
+    </form>
+    <p th:text="#{offer.list-description}"></p>
+    <button type="button" id="updateButton" class="btn btn-primary" th:text="#{update.text}"></button>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        $( "#updateButton" ).click(function() {
+            let numberPage = [[${param.page}]];
+            let urlUpdate = '/offer/list/update';
+            if (numberPage != null ){
+                urlUpdate += "?page="+numberPage[0];
+            }
+            $("#tableOffers").load(urlUpdate);
+        });
+        /*]]>*/
+    </script>
+    <div class="table-responsive" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extrasspringsecurity4">
+        <table class="table table-hover" th:fragment="tableOffers" id="tableOffers">
+            <thead>
+            <tr>
+                <th scope="col" th:text="#{offer.title}"></th>
+                <th scope="col" th:text="#{offer.detail}"></th>
+                <th scope="col" th:text="#{offer.date}"></th>
+                <th scope="col" th:text="#{offer.price}"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="offer : ${offerList}">
+                <td scope="row" th:text="${offer.title}"></td>
+                <td scope="row" th:text="${offer.description}"></td>
+                <td scope="row" th:text="${offer.date}"></td>
+                <td scope="row" th:text="${offer.price} + €"></td>
+                <td th:if="${offer.sold}" th:text="#{offer.sold}"></td>
+                <td>
+                <div th:unless="${offer.sold}">
+                    <button type="button" th:id="${'sellButton' + offer.id}"
+                            class="btn btn-success" th:text="#{offer.sell}"></button>
+                    <script th:inline="javascript">
+                        /*<![CDATA[*/
+                        $("#sellButton"+ "[[${offer.id}]]").click(function() {
+                            $.get( "/offer/[[${offer.id}]]/nosold", function( data ) {
+                                let numberPage = [[${param.page}]];
+                                let urlUpdate = '/offer/list/update';
+                                if ( numberPage != null ){
+                                    urlUpdate += "?page="+numberPage[0];
+                                }
+                                $("#tableOffers").load(urlUpdate);
+                            });
+                        });
+                        /*]]>*/
+                    </script>
+                </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${#lists.isEmpty(offerList)}" th:text="#{offer.empty}"></div>
+</div>
+<footer th:replace="fragments/pagination"/>
+</body>
+</html>
