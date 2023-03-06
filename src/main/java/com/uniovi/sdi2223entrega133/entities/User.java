@@ -16,6 +16,9 @@ public class User {
     private String password;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Offer> offers;
+
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL)
+    private Set<Conversation> conversations;
     private String role;
     private double cartera;
     @Transient //propiedad que no se almacena en la tabla.

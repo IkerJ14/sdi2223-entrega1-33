@@ -9,9 +9,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OffersService {
@@ -41,5 +41,9 @@ public class OffersService {
 
     public List<Offer> getOffersByUser(User user) {
         return offersRepository.findAllByUser(user);
+    }
+
+    public Optional<Offer> getOffer(Long id) {
+        return offersRepository.findById(id);
     }
 }

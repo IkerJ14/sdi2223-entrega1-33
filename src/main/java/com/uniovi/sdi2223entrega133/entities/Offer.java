@@ -3,6 +3,7 @@ package com.uniovi.sdi2223entrega133.entities;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 public class Offer {
@@ -22,6 +23,9 @@ public class Offer {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL)
+    private Set<Conversation> conversations;
 
     public Offer() {
     }

@@ -65,6 +65,9 @@
                     </script>
                 </div>
                 </td>
+                <td th:unless="${offer.user.email.equals(#authentication.getPrincipal().getUsername())}">
+                    <a th:href="${'/conversation/' + offer.id + '/' + #authentication.getPrincipal().getUsername()}"
+                       th:text="#{offer.conversation}"> </a></td>
             </tr>
             </tbody>
         </table>

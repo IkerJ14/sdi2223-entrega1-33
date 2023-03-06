@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="fragments/head">
+  <title></title>
+</head>
+<body>
+<nav th:replace="fragments/nav"/>
+
+<div class="table-responsive" th:fragment="tableMessages" id="tableMessages">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th scope="col">Nombre</th>
+      <th scope="col">Fecha</th>
+      <th scope="col">Mensaje</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="message : ${conversation.messages}">
+      <td th:text="${message.nameSender}"> </td>
+      <td th:text="${message.date}"> </td>
+      <td th:text="${message.text}"> </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+<footer>
+  <form class="form-inline" action="/conversation/message" method="POST" th:object="${message}">
+    <div class="form-group">
+      <input name="textMessage" type="text" class="form-control" size="50"
+             placeholder="Mensaje a enviar">
+      <span class="text-danger" th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></span>
+      <input name="idOffer" type="hidden" class="form-control" th:value="${conversation.offer.id}" >
+      <input name="idBuyer" type="hidden" class="form-control" th:value="${conversation.buyer.id}" >
+    </div>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+  </form>
+</footer>
+
+</html>
