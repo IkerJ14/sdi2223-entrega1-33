@@ -7,38 +7,39 @@
 </head>
 <body>
 <nav th:replace="fragments/nav"/>
+<div class="container" id="main-container">
 
-<div class="table-responsive" th:fragment="tableMessages" id="tableMessages">
-  <table class="table table-hover">
-    <thead>
-    <tr>
-      <th scope="col">Nombre</th>
-      <th scope="col">Fecha</th>
-      <th scope="col">Mensaje</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="message : ${conversation.messages}">
-      <td th:text="${message.nameSender}"> </td>
-      <td th:text="${message.date}"> </td>
-      <td th:text="${message.text}"> </td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+  <h2 th:text="#{conversation-title}"></h2>
 
-</body>
-<footer>
+  <div class="table-responsive" th:fragment="tableMessages" id="tableMessages">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th scope="col" th:text="#{conversation.name}"> </th>
+        <th scope="col" th:text="#{conversation.date}"> </th>
+        <th scope="col" th:text="#{conversation.message}"> </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="message : ${conversation.messages}">
+        <td th:text="${message.nameSender}"> </td>
+        <td th:text="${message.date}"> </td>
+        <td th:text="${message.text}"> </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
   <form class="form-inline" action="/conversation/message" method="POST" th:object="${message}">
     <div class="form-group">
       <input name="textMessage" type="text" class="form-control" size="50"
-             placeholder="Mensaje a enviar">
+             th:placeholder="#{message.placeholder}">
       <span class="text-danger" th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></span>
       <input name="idOffer" type="hidden" class="form-control" th:value="${conversation.offer.id}" >
       <input name="idBuyer" type="hidden" class="form-control" th:value="${conversation.buyer.id}" >
     </div>
-    <button type="submit" class="btn btn-primary">Enviar</button>
+    <button type="submit" class="btn btn-primary" th:text="#{button.send}"> </button>
   </form>
-</footer>
-
+</div>
+</body>
 </html>
