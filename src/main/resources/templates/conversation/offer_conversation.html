@@ -30,11 +30,10 @@
     </table>
   </div>
 
-  <form class="form-inline" action="/conversation/message" method="POST" th:object="${message}">
+  <form class="form-inline" action="/conversation/message" method="POST">
     <div class="form-group">
       <input name="textMessage" type="text" class="form-control" size="50"
-             th:placeholder="#{message.placeholder}">
-      <span class="text-danger" th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></span>
+             th:placeholder="#{message.placeholder}" required>
       <input name="idOffer" type="hidden" class="form-control" th:value="${conversation.offer.id}" >
       <input name="idBuyer" type="hidden" class="form-control" th:value="${conversation.buyer.id}" >
     </div>

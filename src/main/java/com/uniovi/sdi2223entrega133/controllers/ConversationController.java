@@ -61,33 +61,22 @@ public class ConversationController {
         conversationService.addConversation(conversation);
 
         model.addAttribute("conversation", conversation);
-        model.addAttribute("message", new ConversationMessage());
 
         return "/conversation/offer_conversation";
     }
 
     @RequestMapping("/conversation/message")
-    public String getMessage(@RequestParam String textMessage, @RequestParam Long idOffer, @RequestParam Long idBuyer,
-                             @Validated ConversationMessage message, BindingResult result, Model model) {
+    public String getMessage(@RequestParam String textMessage, @RequestParam Long idOffer, @RequestParam Long idBuyer, Model model) {
 
         Offer offer = offersService.getOffer(idOffer).get();
         User buyer = usersService.getUser(idBuyer);
         Conversation conversation = conversationService.getConversationByOfferAndBuyer(offer, buyer);
-        message.setDate(LocalDateTime.now());
-        message.setNameSender(buyer.getName());
-        message.setText(textMessage);
-
-        messageValidator.validate(message, result);
-
-        if (!result.hasErrors()) {
-            conversationMessageService.addMessage(message);
-        }
+        ConversationMessage message = new ConversationMessage(buyer.getName(), LocalDateTime.now(), textMessage);
 
         conversationService.addMessageToConversation(conversation, message);
         conversationService.addConversation(conversation);
 
         model.addAttribute("conversation", conversation);
-        model.addAttribute("message", message);
 
         return "/conversation/offer_conversation";
     }
