@@ -111,4 +111,17 @@ public class OfferController {
         return "offer/list :: tableOffers";
     }
 
+    @RequestMapping("/offer/{id}/nosold")
+    public String buyOffer(@PathVariable Long id, Principal principal) {
+        String userEmail = principal.getName();
+        User user = usersService.getUserByEmail(userEmail);
+        Offer offer = offersService.getOffer(id).get();
+
+        if (!offer.isSold() && offer.getPrice() <= user.getCartera()
+                && !offer.getUser().getEmail().equals(user.getEmail())) {
+            offersService.buyOffer(offer, user);
+        }
+        return "home";
+    }
+
 }

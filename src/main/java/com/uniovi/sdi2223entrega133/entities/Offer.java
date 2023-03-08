@@ -24,6 +24,10 @@ public class Offer {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "buyer_id")
+    private User buyer;
+
     @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL)
     private Set<Conversation> conversations;
 
@@ -92,5 +96,12 @@ public class Offer {
 
     public void setSold(boolean sold) {
         this.sold = sold;
+    }
+
+    public User getBuyer() {
+        return buyer;
+    }
+    public void setBuyer(User buyer) {
+        this.buyer = buyer;
     }
 }

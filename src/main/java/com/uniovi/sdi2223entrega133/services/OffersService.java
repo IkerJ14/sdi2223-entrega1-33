@@ -3,6 +3,7 @@ package com.uniovi.sdi2223entrega133.services;
 import com.uniovi.sdi2223entrega133.entities.Offer;
 import com.uniovi.sdi2223entrega133.entities.User;
 import com.uniovi.sdi2223entrega133.repositories.OffersRepository;
+import com.uniovi.sdi2223entrega133.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -17,6 +18,8 @@ import java.util.Optional;
 public class OffersService {
     @Autowired
     private OffersRepository offersRepository;
+    @Autowired
+    private UserRepository usersRepository;
 
     public Page<Offer> getOffers(Pageable pageable) {
         Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
@@ -45,5 +48,13 @@ public class OffersService {
 
     public Optional<Offer> getOffer(Long id) {
         return offersRepository.findById(id);
+    }
+
+    public void buyOffer(Offer offer, User user) {
+        offer.setSold(true);
+        offer.setBuyer(user);
+        user.setCartera(user.getCartera() - offer.getPrice());
+        usersRepository.save(user);
+        offersRepository.save(offer);
     }
 }
