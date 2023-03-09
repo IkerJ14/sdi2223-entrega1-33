@@ -121,7 +121,16 @@ public class OfferController {
                 && !offer.getUser().getEmail().equals(user.getEmail())) {
             offersService.buyOffer(offer, user);
         }
-        return "home";
+        return "redirect:/offer/purchaseList";
+    }
+
+    @RequestMapping("/offer/purchaseList")
+    public String getPurchaseList(Model model, Principal principal) {
+        String userEmail = principal.getName();
+        User user = usersService.getUserByEmail(userEmail);
+
+        model.addAttribute("purchases", user.getBoughtOffers());
+        return "offer/purchaseList";
     }
 
 }

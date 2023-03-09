@@ -54,6 +54,7 @@ public class OffersService {
         offer.setSold(true);
         offer.setBuyer(user);
         user.setCartera(user.getCartera() - offer.getPrice());
+        user.buyOffer(offer);
         usersRepository.save(user);
         offersRepository.save(offer);
     }

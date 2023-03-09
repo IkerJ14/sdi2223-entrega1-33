@@ -40,6 +40,12 @@ public class User {
         this.lastName = apellido;
         cartera = 100;
     }
+
+    @Override
+    public String toString() {
+        return getName() + " " + getLastName();
+    }
+
     public void setId(long id) {
         this.id = id;
     }
