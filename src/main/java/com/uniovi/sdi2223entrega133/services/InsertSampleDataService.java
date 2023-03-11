@@ -26,7 +26,7 @@ public class InsertSampleDataService {
         user2.setPassword("user02");
         user2.setRole(rolesService.getRoles()[0]);
         User user3 = new User("user03@email.com", "Paco", "Flores");
-        user3.setPassword("user03s");
+        user3.setPassword("user03");
         user3.setRole(rolesService.getRoles()[0]);
         User user4 = new User("user04@email.com", "Felipe", "Rodríguez");
         user4.setPassword("user04");
@@ -98,6 +98,23 @@ public class InsertSampleDataService {
         };
 
         user2.setOffers(user2Offers);
+
+        Set user3Offers = new HashSet<Offer>() {
+            {
+                add(new Offer("Playeros", "Playeros de montaña", LocalDate.of(2019, 5, 14), 40, user3));
+                add(new Offer("Lápices", "Juego de lápices HB", LocalDate.of(2016, 3, 10), 15, user3));
+                add(new Offer("Camiseta", "Camiseta roja", LocalDate.of(2020, 9, 17), 18, user3));
+                add(new Offer("Pantalón", "Pantalón vaquero", LocalDate.of(2020, 7, 19), 25, user3));
+                add(new Offer("Bolsa de tela", "Bolsa de tela para compra", LocalDate.of(2022, 4, 10), 12, user3));
+                add(new Offer("Gafas de sol", "Lentes solares polarizadas", LocalDate.of(2019, 4, 8), 20, user3));
+                add(new Offer("Televisión", "Televisión 4K", LocalDate.of(2017, 9, 2), 500, user3));
+                add(new Offer("Silla", "Silla de oficina", LocalDate.of(2017, 4, 12), 90, user3));
+                add(new Offer("Sofá", "Sofá de cuero", LocalDate.of(2020, 6, 10), 250, user3));
+                add(new Offer("Teclado", "Teclado Bluetooth para ordenador", LocalDate.of(2021, 4, 13), 30, user3));
+            }
+        };
+
+        user3.setOffers(user3Offers);
 
         User admin = new User("admin@email.com", "Admin", "Admin");
         admin.setPassword("admin");

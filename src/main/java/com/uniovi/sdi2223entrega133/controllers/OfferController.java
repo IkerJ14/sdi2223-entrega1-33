@@ -61,6 +61,7 @@ public class OfferController {
     @RequestMapping(value="/offer/add")
     public String getOffer(Model model){
         Offer offer = new Offer();
+        offer.setPrice(0.0);
         model.addAttribute("offer", offer);
         return "offer/add";
     }
@@ -75,7 +76,6 @@ public class OfferController {
         String email = principal.getName();
         User user = usersService.getUserByEmail(email);
         offer.setUser(user);
-        // TODO: Check if form does not need a date field
         offer.setDate(LocalDate.now());
         offer.setSold(false);
 

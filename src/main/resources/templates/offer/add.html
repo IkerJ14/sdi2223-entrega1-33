@@ -13,8 +13,7 @@
     <div class="form-group">
       <label class="control-label col-sm-10" for="title" th:text="#{offer.add-title}"></label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="title" name="title" th:placeholder="#{offer.title-note}"
-               required="true" />
+        <input type="text" class="form-control" id="title" name="title" th:placeholder="#{offer.title-note}"/>
         <span class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
       </div>
     </div>
@@ -22,7 +21,7 @@
       <label class="control-label col-sm-10" for="description" th:text="#{offer.add-description}"></label>
       <div class="col-sm-10">
         <input type="text" class="form-control" id="description" name="description"
-               th:placeholder="#{offer.description-note}"  required="true" />
+               th:placeholder="#{offer.description-note}"/>
         <span class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
       </div>
     </div>
@@ -30,7 +29,7 @@
       <label class="control-label col-sm-10" for="price" th:text="#{offer.add-price}"></label>
       <div class="col-sm-10">
         <input type="number" step="any" class="form-control" id="price" name="price"
-               th:placeholder="#{offer.price-note}" required="true" />
+               th:placeholder="#{offer.price-note}"/>
         <span class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
       </div>
     </div>

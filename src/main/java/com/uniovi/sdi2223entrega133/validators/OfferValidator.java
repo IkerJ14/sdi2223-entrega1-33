@@ -19,6 +19,7 @@ public class OfferValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Offer offer = (Offer) target;
+        System.out.println(((Offer) target).getPrice());
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "Error.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "Error.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "price", "Error.empty");
@@ -26,8 +27,11 @@ public class OfferValidator implements Validator {
         if (offer.getDescription().length() < 10) {
             errors.rejectValue("description", "Error.offer.description.length");
         }
-        if (offer.getPrice() < 0) {
-            errors.rejectValue("price", "Error.offer.price.negative");
+
+        if (offer.getPrice() != null) {
+            if (offer.getPrice() < 0) {
+                errors.rejectValue("price", "Error.offer.price.negative");
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ public class Offer {
 
     private String description;
     private LocalDate date;
-    private double price;
+    private Double price;
 
     private boolean sold;
 
@@ -74,11 +74,11 @@ public class Offer {
         this.date = date;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
