@@ -75,8 +75,8 @@ public class InsertSampleDataService {
                 add(new Offer("Camiseta", "Camiseta roja", LocalDate.of(2018, 2, 17), 12, user1));
                 add(new Offer("Bicicleta", "Bicicleta de montaña", LocalDate.of(2015, 6, 12), 250, user1));
                 add(new Offer("Libro", "1984", LocalDate.of(2022, 4, 11), 18, user1));
-                add(new Offer("Película", "La Chaqueta Metálica", LocalDate.of(2011, 9, 17), 25, user1));
-                add(new Offer("Disco duro", "Disco duro de 1 TB", LocalDate.of(2017, 5, 20), 75, user1));
+                add(new Offer("Película", "DVD de La Chaqueta Metálica", LocalDate.of(2011, 9, 17), 25, user1));
+                add(new Offer("Disco duro externo", "Disco duro de 1 TB", LocalDate.of(2017, 5, 20), 75, user1));
             }
         };
 
@@ -115,6 +115,55 @@ public class InsertSampleDataService {
         };
 
         user3.setOffers(user3Offers);
+
+        Set user4Offers = new HashSet<Offer>() {
+            {
+                add(new Offer("Libro", "Dune", LocalDate.of(2017, 3, 6), 35, user4));
+                add(new Offer("Guitarra", "Guitarra española", LocalDate.of(2012, 10, 7), 150, user4));
+                add(new Offer("Lata de pintura", "Pintura blanca para paredes", LocalDate.of(2020, 9, 17), 18, user4));
+                add(new Offer("Brocha", "Brocha de pintor", LocalDate.of(2020, 7, 19), 25, user4));
+                add(new Offer("Disco duro externo", "Disco duro externo de 2TB", LocalDate.of(2018, 7, 9), 90, user4));
+                add(new Offer("Cortacesped", "Cortacesped eléctrico", LocalDate.of(2015, 2, 10), 300, user4));
+                add(new Offer("Armario", "Armario ropero", LocalDate.of(2014, 8, 12), 190, user4));
+                add(new Offer("Tumbona", "Tumbona para jardín", LocalDate.of(2014, 12, 1), 100, user4));
+                add(new Offer("Teléfono móvil", "Móvil con 8GB de RAM", LocalDate.of(2022, 4, 16), 230, user4));
+                add(new Offer("Secadora", "Secadora blanca de 8 kg", LocalDate.of(2017, 3, 9), 650, user4));
+            }
+        };
+
+        user4.setOffers(user4Offers);
+
+        Set user5Offers = new HashSet<Offer>() {
+            {
+                add(new Offer("Pesas", "Juego de mancuernas de hasta 30 kg", LocalDate.of(2016, 7, 18), 40, user5));
+                add(new Offer("Videojuego", "StarCraft Remastered", LocalDate.of(2010, 9, 8), 60, user5));
+                add(new Offer("Lata de pintura", "Pintura blanca para paredes", LocalDate.of(2020, 9, 17), 18, user5));
+                add(new Offer("Brocha", "Brocha de pintor", LocalDate.of(2020, 7, 19), 25, user5));
+                add(new Offer("Disco duro externo", "Disco duro externo de 2TB", LocalDate.of(2018, 7, 9), 90, user5));
+                add(new Offer("Semillas", "Semillas de tomate para jardín", LocalDate.of(2023, 2, 15), 15, user5));
+                add(new Offer("Cortina", "Cortina para ducha", LocalDate.of(2019, 11, 19), 20, user5));
+                add(new Offer("Teléfono móvil", "Móvil con 8GB de RAM", LocalDate.of(2022, 4, 16), 230, user5));
+                add(new Offer("Mando", "Mando universal de televisión", LocalDate.of(2018, 7, 13), 28, user5));
+            }
+        };
+
+        user5.setOffers(user5Offers);
+
+        Set user6Offers = new HashSet<Offer>() {
+            {
+                add(new Offer("Tebeos", "Lote de 40 números de Mortadelo y Filemón", LocalDate.of(2018, 8, 14), 60, user6));
+                add(new Offer("Película", "BluRay de Lawrence de Arabia", LocalDate.of(2013, 4, 17), 45, user6));
+                add(new Offer("Poster", "La Gioconda, 40x60", LocalDate.of(2018, 3, 12), 21, user6));
+                add(new Offer("Pala", "Pala de metal tipo Y", LocalDate.of(2017, 10, 17), 18, user6));
+                add(new Offer("USB", "USB 3.0 de 256 MB", LocalDate.of(2015, 11, 19), 23, user6));
+                add(new Offer("Gomas", "Pack de 24 gomas de borrar", LocalDate.of(2022, 12, 5), 11, user6));
+                add(new Offer("Persiana", "Persiana para ventana", LocalDate.of(2017, 9, 11), 27, user6));
+                add(new Offer("Cámara", "Cámara de fotos de 18-55 mm", LocalDate.of(2020, 7, 14), 450, user6));
+                add(new Offer("Sellos", "Pacl de 200 sellos postales franceses, 1950-1990", LocalDate.of(2020, 12, 11), 18, user6));
+            }
+        };
+
+        user6.setOffers(user6Offers);
 
         User admin = new User("admin@email.com", "Admin", "Admin");
         admin.setPassword("admin");
