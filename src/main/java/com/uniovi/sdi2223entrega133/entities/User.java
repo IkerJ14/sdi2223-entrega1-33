@@ -1,15 +1,51 @@
 package com.uniovi.sdi2223entrega133.entities;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class User {
+
+    @Id
+    @GeneratedValue
+    private long id;
+    @Column(unique = true)
+    private String email;
+    private String name;
+    private String lastName;
+    private String password;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Offer> offers;
+
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL)
+    private Set<Offer> boughtOffers;
+
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL)
+    private Set<Conversation> conversations;
+    private String role;
+    private double cartera;
+    @Transient //propiedad que no se almacena en la tabla.
+    private String passwordConfirm;
 
     public long getId() {
         return id;
     }
     public User() {
+        cartera = 100;
     }
+
+    public User(String email, String nombre , String apellido) {
+        this.email = email;
+        this.name = nombre;
+        this.lastName = apellido;
+        cartera = 100;
+    }
+
+    @Override
+    public String toString() {
+        return getName() + " " + getLastName();
+    }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -55,26 +91,38 @@ public class User {
         this.passwordConfirm = passwordConfirm;
     }
 
-    @Id
-    @GeneratedValue
-    private long id;
-    @Column(unique = true)
-    private String mail;
-    private String name;
-    private String lastName;
-    private String password;
-
-    private String role;
-
-    @Transient //propiedad que no se almacena en la tabla.
-    private String passwordConfirm;
-
-
-    public String getMail() {
-        return mail;
+    public double getCartera() {
+        return cartera;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setCartera(double cartera) {
+        this.cartera = cartera;
+    }
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Set<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(Set<Offer> offers) {
+        this.offers = offers;
+    }
+
+    public Set<Offer> getBoughtOffers() {
+        return boughtOffers;
+    }
+    public void setBoughtOffers(Set<Offer> boughtOffers) {
+        this.boughtOffers = boughtOffers;
+    }
+    public void buyOffer(Offer offer) {
+        this.boughtOffers.add(offer);
     }
 }

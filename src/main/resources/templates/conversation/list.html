@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="fragments/head">
+    <title></title>
+</head>
+<body>
+<nav th:replace="fragments/nav"/>
+<div class="container" id="main-container">
+    <h2 th:text="#{conversation-list-title}"></h2>
+    <div class="table-responsive" th:fragment="tableConversations" id="tableConversations">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col" th:text="#{conversation.list.email}"> </th>
+                <th scope="col" th:text="#{conversation.list.name}"> </th>
+                <th scope="col" th:text="#{conversation.list.access}"> </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="conversation : ${listConversations}">
+                <td th:text="${conversation.offer.user.email}"> </td>
+                <td th:text="${conversation.offer.title}"> </td>
+                <td><a th:href="${'/conversation/' + conversation.offer.id + '/' + conversation.buyer.email}"
+                       th:text="#{offer.conversation}"> </a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<footer th:replace="fragments/pagination"/>
+</body>
+</html>
