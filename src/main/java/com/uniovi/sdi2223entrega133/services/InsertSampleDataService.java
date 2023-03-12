@@ -65,7 +65,7 @@ public class InsertSampleDataService {
         user15.setPassword("user15");
         user15.setRole(rolesService.getRoles()[0]);
 
-        Set user1Offers = new HashSet<Offer>() {
+        Set<Offer> user1Offers = new HashSet<>() {
             {
                 add(new Offer("Mesita", "Mesita de noche", LocalDate.of(2022, 5, 20), 100, user1));
                 add(new Offer("Sillón", "Sillón reclinable", LocalDate.of(2020, 4, 15), 500, user1));
@@ -82,7 +82,7 @@ public class InsertSampleDataService {
 
         user1.setOffers(user1Offers);
 
-        Set user2Offers = new HashSet<Offer>() {
+        Set<Offer> user2Offers = new HashSet<>() {
             {
                 add(new Offer("Mesa", "Mesa de comedor", LocalDate.of(2021, 5, 14), 120, user2));
                 add(new Offer("Rotuladores", "Juego de rotuladores de colores", LocalDate.of(2019, 8, 10), 15, user2));
@@ -99,7 +99,7 @@ public class InsertSampleDataService {
 
         user2.setOffers(user2Offers);
 
-        Set user3Offers = new HashSet<Offer>() {
+        Set<Offer> user3Offers = new HashSet<>() {
             {
                 add(new Offer("Playeros", "Playeros de montaña", LocalDate.of(2019, 5, 14), 40, user3));
                 add(new Offer("Lápices", "Juego de lápices HB", LocalDate.of(2016, 3, 10), 15, user3));
@@ -116,7 +116,7 @@ public class InsertSampleDataService {
 
         user3.setOffers(user3Offers);
 
-        Set user4Offers = new HashSet<Offer>() {
+        Set<Offer> user4Offers = new HashSet<>() {
             {
                 add(new Offer("Libro", "Dune", LocalDate.of(2017, 3, 6), 35, user4));
                 add(new Offer("Guitarra", "Guitarra española", LocalDate.of(2012, 10, 7), 150, user4));
@@ -133,13 +133,13 @@ public class InsertSampleDataService {
 
         user4.setOffers(user4Offers);
 
-        Set user5Offers = new HashSet<Offer>() {
+        Set<Offer> user5Offers = new HashSet<>() {
             {
                 add(new Offer("Pesas", "Juego de mancuernas de hasta 30 kg", LocalDate.of(2016, 7, 18), 40, user5));
                 add(new Offer("Videojuego", "StarCraft Remastered", LocalDate.of(2010, 9, 8), 60, user5));
-                add(new Offer("Lata de pintura", "Pintura blanca para paredes", LocalDate.of(2020, 9, 17), 18, user5));
-                add(new Offer("Brocha", "Brocha de pintor", LocalDate.of(2020, 7, 19), 25, user5));
-                add(new Offer("Disco duro externo", "Disco duro externo de 2TB", LocalDate.of(2018, 7, 9), 90, user5));
+                add(new Offer("Bolsas de plástico", "Rollo de 20 bolsas de plástico", LocalDate.of(2022, 3, 12), 15, user5));
+                add(new Offer("Pinceles", "Juego de 10 pinceles para óleo", LocalDate.of(2019, 5, 7), 5, user5));
+                add(new Offer("Folios", "Pack de 40 folios A4", LocalDate.of(2022, 1, 24), 20, user5));
                 add(new Offer("Semillas", "Semillas de tomate para jardín", LocalDate.of(2023, 2, 15), 15, user5));
                 add(new Offer("Cortina", "Cortina para ducha", LocalDate.of(2019, 11, 19), 20, user5));
                 add(new Offer("Teléfono móvil", "Móvil con 8GB de RAM", LocalDate.of(2022, 4, 16), 230, user5));
@@ -150,7 +150,7 @@ public class InsertSampleDataService {
 
         user5.setOffers(user5Offers);
 
-        Set user6Offers = new HashSet<Offer>() {
+        Set<Offer> user6Offers = new HashSet<>() {
             {
                 add(new Offer("Tebeos", "Lote de 40 números de Mortadelo y Filemón", LocalDate.of(2018, 8, 14), 60, user6));
                 add(new Offer("Película", "BluRay de Lawrence de Arabia", LocalDate.of(2013, 4, 17), 45, user6));
@@ -167,7 +167,7 @@ public class InsertSampleDataService {
 
         user6.setOffers(user6Offers);
 
-        Set user7Offers = new HashSet<Offer>() {
+        Set<Offer> user7Offers = new HashSet<>() {
             {
                 add(new Offer("Taburete", "Taburete de madera", LocalDate.of(2014, 9, 13), 40, user7));
                 add(new Offer("Sartenes", "Juego de sartenes antiadherentes", LocalDate.of(2018, 5, 12), 63, user7));
@@ -184,7 +184,7 @@ public class InsertSampleDataService {
 
         user7.setOffers(user7Offers);
 
-        Set user8Offers = new HashSet<Offer>() {
+        Set<Offer> user8Offers = new HashSet<>() {
             {
                 add(new Offer("Sandwichera", "Sandwichera de 700W", LocalDate.of(2019, 1, 22), 40, user8));
                 add(new Offer("Cuchillos", "Juego de cuchillos para cortar jamón", LocalDate.of(2020, 6, 18), 95, user8));
@@ -200,6 +200,74 @@ public class InsertSampleDataService {
         };
 
         user8.setOffers(user8Offers);
+
+        Set<Offer> user9Offers = new HashSet<>() {
+            {
+                add(new Offer("Nórdico", "Funda nórdica reversible", LocalDate.of(2022, 3, 10), 30, user9));
+                add(new Offer("Copa", "Juego de 6 copas de vino", LocalDate.of(2019, 11, 23), 40, user9));
+                add(new Offer("Posavasos", "Pack de 10 posavasos de corcho", LocalDate.of(2021, 4, 13), 13, user9));
+                add(new Offer("Cargador", "Cargador de movil USB-C", LocalDate.of(2022, 10, 21), 10, user9));
+                add(new Offer("Película", "Pack Trilogía El Señor de los Anillos (Edición Extendida) en DVD", LocalDate.of(2018, 7, 3), 60, user9));
+                add(new Offer("Disfraz", "Disfraz de Batman talla M", LocalDate.of(2016, 2, 25), 30, user9));
+                add(new Offer("Poster", "Poster de Jimi Hendrix", LocalDate.of(2015, 6, 29), 15, user9));
+                add(new Offer("Bolígrafos", "Pack de 10 bolígrafos de tinta líquida", LocalDate.of(2020, 7, 12), 20, user9));
+                add(new Offer("Regla", "Regla de plástico de 30 cm", LocalDate.of(2017, 8, 20), 7, user9));
+                add(new Offer("Playeros", "Playeros de tenis", LocalDate.of(2021, 9, 5),  25, user9));
+            }
+        };
+
+        user9.setOffers(user9Offers);
+
+        Set<Offer> user10Offers = new HashSet<>() {
+            {
+                add(new Offer("Casco", "Casco para conducir en moto", LocalDate.of(2020, 7, 29), 40, user10));
+                add(new Offer("Rodillera", "Rodilleras para bici", LocalDate.of(2022, 10, 2), 25, user10));
+                add(new Offer("Gomas de pelo", "Pack de 20 gomas para sujetarse el pelo", LocalDate.of(2019, 8, 14), 5, user10));
+                add(new Offer("Serie", "BluRay de la primera temporada de Twin Peaks", LocalDate.of(2018, 1, 28), 30, user10));
+                add(new Offer("Gorra", "Gorra roja", LocalDate.of(2022, 9, 17), 15, user10));
+                add(new Offer("Bandeja", "Bandeja para el horno", LocalDate.of(2020, 4, 15), 20, user10));
+                add(new Offer("Calcetines", "Pack de 4 calcetines blancos cortos", LocalDate.of(2018, 4, 19), 10, user10));
+                add(new Offer("Pañuelos", "Pack de 3 pañuelos para limpiar pantallas", LocalDate.of(2021, 9, 21), 8, user10));
+                add(new Offer("Teléfono", "Teléfono fijo para oficina", LocalDate.of(2019, 3, 15), 20, user10));
+                add(new Offer("Cafetera", "Cafetera de cápsulas", LocalDate.of(2017, 6, 26),  45, user10));
+            }
+        };
+
+        user10.setOffers(user10Offers);
+
+        Set<Offer> user11Offers = new HashSet<>() {
+            {
+                add(new Offer("Bufanda", "Bufanda de algodón", LocalDate.of(2022, 3, 13), 10, user11));
+                add(new Offer("Micrófono", "Micrófono Bluetooth", LocalDate.of(2019, 1, 18), 30, user11));
+                add(new Offer("Botella", "Botella de plástico reutilizable de 1 L", LocalDate.of(2022, 11, 4), 20, user11));
+                add(new Offer("Notas", "Pack de 100 notas adhesivas", LocalDate.of(2021, 7, 18), 5, user11));
+                add(new Offer("Sombrero", "Bombín negro de fieltro", LocalDate.of(2020, 6, 7), 10, user11));
+                add(new Offer("Caja", "Caja de cartón con tapa", LocalDate.of(2018, 10, 5), 10, user11));
+                add(new Offer("Maleta", "Maleta de viaje mediana", LocalDate.of(2019, 9, 23), 50, user11));
+                add(new Offer("Archivador", "Archivador A4 con 4 anillas", LocalDate.of(2022, 10, 1), 10, user11));
+                add(new Offer("Libro", "La Metamorfosis", LocalDate.of(2019, 3, 15), 20, user11));
+                add(new Offer("Cuerdas", "Pack de 6 cuerdas de guitarra", LocalDate.of(2022, 12, 20),  10, user11));
+            }
+        };
+
+        user11.setOffers(user11Offers);
+
+        Set<Offer> user12Offers = new HashSet<>() {
+            {
+                add(new Offer("Serie", "Pack de 4 temporadas de Los Simpsons en DVD", LocalDate.of(2017, 4, 20), 25, user12));
+                add(new Offer("Motosierra", "Motosierra de gasolina", LocalDate.of(2020, 7, 8), 80, user12));
+                add(new Offer("Mochila", "Mochila de montaña", LocalDate.of(2018, 2, 22), 40, user12));
+                add(new Offer("Película", "DVD de Una Nueva Esperanza", LocalDate.of(2016, 3, 31), 25, user12));
+                add(new Offer("Esterilla", "Esterilla grande para hacer yoga", LocalDate.of(2022, 12, 27), 10, user12));
+                add(new Offer("Incienso", "Caja de 40 varillas de incienso", LocalDate.of(2019, 7, 9), 5, user12));
+                add(new Offer("Vajilla", "Vajilla de porcelana de 18 piezas", LocalDate.of(2020, 5, 3), 35, user12));
+                add(new Offer("Lámpara", "Lámpara de lava", LocalDate.of(2017, 10, 19), 27, user12));
+                add(new Offer("Alfombra", "Alfombra de pelo grande", LocalDate.of(2021, 8, 25), 30, user12));
+                add(new Offer("Almohada", "Almohada larga con funda", LocalDate.of(2020, 2, 29),  15, user12));
+            }
+        };
+
+        user12.setOffers(user12Offers);
 
         User admin = new User("admin@email.com", "Admin", "Admin");
         admin.setPassword("admin");
