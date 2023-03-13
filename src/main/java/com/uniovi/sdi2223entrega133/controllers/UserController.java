@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.uniovi.sdi2223entrega133.validators.SignUpFormValidator;
 import com.uniovi.sdi2223entrega133.services.RolesService;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Arrays;
+import java.util.Date;
 
 @Controller
 public class UserController {
@@ -62,5 +66,18 @@ public class UserController {
     public String updateList(Model model){
         model.addAttribute("usersList", userService.getUsers() );
         return "user/list :: tableUsers";
+    }
+
+    @RequestMapping("/user/delete")
+    public String delete(@RequestParam(required = false) String id, Model model) {
+        if(id == null)
+            return "redirect:list";
+
+        Arrays.stream(id.split(","))
+                .map(Long::parseLong)
+                .forEach(userService::deleteUser);
+
+        model.addAttribute("usersList", userService.getUsers());
+        return "redirect:list";
     }
 }
