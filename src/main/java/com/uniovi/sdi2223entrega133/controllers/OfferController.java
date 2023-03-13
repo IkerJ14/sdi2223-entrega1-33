@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -112,11 +113,28 @@ public class OfferController {
     }
 
     @RequestMapping("/offer/{id}/nosold")
-    public String buyOffer(@PathVariable Long id, Principal principal) {
+    public String buyOffer(@PathVariable Long id, Principal principal, RedirectAttributes redAtt) {
         String userEmail = principal.getName();
         User user = usersService.getUserByEmail(userEmail);
         Offer offer = offersService.getOffer(id).get();
-        offersService.buyOffer(offer, user);
+
+        int error = offersService.buyOffer(offer, user);
+
+        switch (error) {
+            case 0:
+                redAtt.addFlashAttribute("error", false);
+                break;
+            case 1:
+                redAtt.addFlashAttribute("error_owner", true);
+                break;
+            case 2:
+                redAtt.addFlashAttribute("error_price", true);
+                break;
+            case 3:
+                redAtt.addFlashAttribute("error_sold", true);
+                break;
+        }
+
         return "redirect:/offer/purchaseList";
     }
 
@@ -125,7 +143,7 @@ public class OfferController {
         String userEmail = principal.getName();
         User user = usersService.getUserByEmail(userEmail);
 
-        model.addAttribute("purchases", user.getBoughtOffers());
+        model.addAttribute("purchases", usersService.getBoughtOffersFromUser(user));
         return "offer/purchaseList";
     }
 

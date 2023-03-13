@@ -50,9 +50,14 @@ public class OffersService {
         return offersRepository.findById(id);
     }
 
-    public void buyOffer(Offer offer, User user) {
-        if (!offer.isSold() && offer.getPrice() <= user.getCartera() &&
-                    !offer.getUser().getEmail().equals(user.getEmail())) {
+    public int buyOffer(Offer offer, User user) {
+        if (offer.getUser().getEmail().equals(user.getEmail())) {
+            return 1;
+        } else if (offer.getPrice() > user.getCartera()) {
+            return 2;
+        } else if (offer.isSold()) {
+            return 3;
+        } else {
             offer.setSold(true);
             offer.setBuyer(user);
             user.setCartera(user.getCartera() - offer.getPrice());
@@ -60,5 +65,6 @@ public class OffersService {
             usersRepository.save(user);
             offersRepository.save(offer);
         }
+        return 0;
     }
 }
