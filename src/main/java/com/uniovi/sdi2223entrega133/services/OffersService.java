@@ -51,11 +51,14 @@ public class OffersService {
     }
 
     public void buyOffer(Offer offer, User user) {
-        offer.setSold(true);
-        offer.setBuyer(user);
-        user.setCartera(user.getCartera() - offer.getPrice());
-        user.buyOffer(offer);
-        usersRepository.save(user);
-        offersRepository.save(offer);
+        if (!offer.isSold() && offer.getPrice() <= user.getCartera() &&
+                    !offer.getUser().getEmail().equals(user.getEmail())) {
+            offer.setSold(true);
+            offer.setBuyer(user);
+            user.setCartera(user.getCartera() - offer.getPrice());
+            user.buyOffer(offer);
+            usersRepository.save(user);
+            offersRepository.save(offer);
+        }
     }
 }
