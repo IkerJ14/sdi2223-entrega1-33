@@ -1,5 +1,6 @@
 package com.uniovi.sdi2223entrega133;
 import com.uniovi.sdi2223entrega133.handlers.LoginHandler;
+import com.uniovi.sdi2223entrega133.handlers.LogoutHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 
 @Configuration
@@ -33,6 +35,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new LoginHandler();
     }
 
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler(){
+        return new LogoutHandler();
+    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -48,6 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout()
+                .logoutSuccessHandler(logoutSuccessHandler())
                 .permitAll();
 
     }
