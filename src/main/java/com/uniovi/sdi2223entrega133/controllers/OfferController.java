@@ -116,11 +116,7 @@ public class OfferController {
         String userEmail = principal.getName();
         User user = usersService.getUserByEmail(userEmail);
         Offer offer = offersService.getOffer(id).get();
-
-        if (!offer.isSold() && offer.getPrice() <= user.getCartera()
-                && !offer.getUser().getEmail().equals(user.getEmail())) {
-            offersService.buyOffer(offer, user);
-        }
+        offersService.buyOffer(offer, user);
         return "redirect:/offer/purchaseList";
     }
 

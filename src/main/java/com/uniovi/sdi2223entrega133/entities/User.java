@@ -43,7 +43,7 @@ public class User {
 
     @Override
     public String toString() {
-        return getName() + " " + getLastName();
+        return getName() + " [" + getEmail() + "]";
     }
 
     public void setId(long id) {
