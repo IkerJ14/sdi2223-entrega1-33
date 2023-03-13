@@ -1,4 +1,5 @@
 package com.uniovi.sdi2223entrega133;
+import com.uniovi.sdi2223entrega133.handlers.LoginFailHandler;
 import com.uniovi.sdi2223entrega133.handlers.LoginHandler;
 import com.uniovi.sdi2223entrega133.handlers.LogoutHandler;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
@@ -39,6 +41,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public LogoutSuccessHandler logoutSuccessHandler(){
         return new LogoutHandler();
     }
+
+    @Bean
+    public AuthenticationFailureHandler authFailureHandler() {
+        return new LoginFailHandler();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -51,6 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .successHandler(authSuccessHandler())
+                .failureHandler(authFailureHandler())
                 .permitAll()
                 .and()
                 .logout()
