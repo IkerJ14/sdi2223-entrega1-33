@@ -19,6 +19,6 @@ public class MessageValidator implements Validator {
     public void validate(Object target, Errors errors) {
         ConversationMessage message = (ConversationMessage) target;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "text", "Error.empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "textMessage", "Error.empty");
     }
 }

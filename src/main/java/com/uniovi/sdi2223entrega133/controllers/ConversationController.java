@@ -11,7 +11,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +23,8 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,8 +63,10 @@ public class ConversationController {
         }
 
         conversationService.addConversation(conversation);
+        ConversationMessage message = new ConversationMessage();
 
         model.addAttribute("conversation", conversation);
+        model.addAttribute("message", message);
 
         logger.info("Se realizo peticion get /conversation/" + idOffer + "/" + emailBuyer);
         Log log2 = new Log("PET", new Date(), "ConversationController: GET: conversation/"+ idOffer + "/" + emailBuyer);
@@ -68,17 +75,49 @@ public class ConversationController {
     }
 
     @RequestMapping("/conversation/message")
-    public String getMessage(@RequestParam String textMessage, @RequestParam Long idOffer, @RequestParam Long idBuyer, Model model) {
-
+    public String getMessage(@RequestParam Long idOffer, @RequestParam Long idBuyer, Model model, Principal principal,
+                             @ModelAttribute @Validated ConversationMessage message, BindingResult result) {
         Offer offer = offersService.getOffer(idOffer).get();
         User buyer = usersService.getUser(idBuyer);
         Conversation conversation = conversationService.getConversationByOfferAndBuyer(offer, buyer);
-        ConversationMessage message = new ConversationMessage(buyer.getName(), LocalDateTime.now(), textMessage);
+
+        messageValidator.validate(message, result);
+        for (Object object : result.getAllErrors()) {
+            if(object instanceof FieldError) {
+                FieldError fieldError = (FieldError) object;
+
+                System.out.println(fieldError.getField());
+            }
+
+            if(object instanceof ObjectError) {
+                ObjectError objectError = (ObjectError) object;
+
+                System.out.println(objectError.getCode());
+            }
+        }
+        if (result.hasErrors()) {
+            conversationService.addConversation(conversation);
+            model.addAttribute("conversation", conversation);
+            model.addAttribute("message", message);
+            return "/conversation/offer_conversation";
+        }
+
+        String email = principal.getName();
+        User currentUser = usersService.getUserByEmail(email);
+
+        message.setNameSender(currentUser.getName());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime now = LocalDateTime.now();
+        String formatDateTime = now.format(formatter);
+
+        message.setDate(formatDateTime);
 
         conversationService.addMessageToConversation(conversation, message);
         conversationService.addConversation(conversation);
 
         model.addAttribute("conversation", conversation);
+        model.addAttribute("message", message);
 
         logger.info("Se realizo peticion get /conversation/message");
         Log log2 = new Log("PET", new Date(), "ConversationController: GET: conversation/message");

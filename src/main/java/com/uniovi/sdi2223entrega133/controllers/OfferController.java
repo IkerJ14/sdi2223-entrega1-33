@@ -150,7 +150,7 @@ public class OfferController {
         switch (error) {
             case 0:
                 redAtt.addFlashAttribute("error", false);
-                break;
+                return "redirect:/offer/purchaseList";
             case 1:
                 redAtt.addFlashAttribute("error_owner", true);
                 break;
@@ -165,7 +165,7 @@ public class OfferController {
         Log log2 = new Log("PET", new Date(), "OfferController: GET: /offer/"+ id + "/nosold");
         logService.addLog(log2);
 
-        return "redirect:/offer/purchaseList";
+        return "redirect:/offer/list";
     }
 
     @RequestMapping("/offer/purchaseList")

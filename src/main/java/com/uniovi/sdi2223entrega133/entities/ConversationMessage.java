@@ -2,7 +2,6 @@ package com.uniovi.sdi2223entrega133.entities;
 
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,8 +11,8 @@ public class ConversationMessage {
     @GeneratedValue
     private Long id;
 
-    private String text;
-    private LocalDateTime date;
+    private String textMessage;
+    private String date;
     private String nameSender;
 
     @ManyToOne
@@ -22,10 +21,14 @@ public class ConversationMessage {
 
     public ConversationMessage() {  }
 
-    public ConversationMessage(String nameSender, LocalDateTime date, String text) {
+    public ConversationMessage(String textMessage) {
+        this.textMessage = textMessage;
+    }
+
+    public ConversationMessage(String nameSender, String date, String textMessage) {
         this.nameSender = nameSender;
         this.date = date;
-        this.text = text;
+        this.textMessage = textMessage;
     }
 
     public void setId(Long id) {
@@ -36,19 +39,19 @@ public class ConversationMessage {
         return id;
     }
 
-    public String getText() {
-        return text;
+    public String getTextMessage() {
+        return textMessage;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setTextMessage(String text) {
+        this.textMessage = text;
     }
 
-    public LocalDateTime getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

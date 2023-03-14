@@ -24,16 +24,19 @@
       <tr th:each="message : ${conversation.messages}">
         <td th:text="${message.nameSender}"> </td>
         <td th:text="${message.date}"> </td>
-        <td th:text="${message.text}"> </td>
+        <td th:text="${message.textMessage}"> </td>
       </tr>
       </tbody>
     </table>
   </div>
 
-  <form class="form-inline" action="/conversation/message" method="POST">
+  <form class="form-inline" action="/conversation/message" method="POST" th:object="${message}">
     <div class="form-group">
-      <input name="textMessage" type="text" class="form-control" size="50"
-             th:placeholder="#{message.placeholder}" required>
+      <div>
+        <input type="text" class="form-control" size="50" name="textMessage" id="textMessage"
+               th:placeholder="#{message.placeholder}">
+        <span class="text-danger" th:if="${#fields.hasErrors('textMessage')}" th:errors="*{textMessage}"></span>
+      </div>
       <input name="idOffer" type="hidden" class="form-control" th:value="${conversation.offer.id}" >
       <input name="idBuyer" type="hidden" class="form-control" th:value="${conversation.buyer.id}" >
     </div>
