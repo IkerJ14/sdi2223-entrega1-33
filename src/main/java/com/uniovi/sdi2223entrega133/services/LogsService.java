@@ -22,4 +22,8 @@ public class LogsService {
     public void deleteAll(){
         repo.deleteAll();
     }
+
+    public List<Log> getLogsFilteredBy(String filter){
+        return new LinkedList<>(repo.findFiltered(filter));
+    }
 }

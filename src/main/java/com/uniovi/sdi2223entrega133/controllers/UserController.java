@@ -74,7 +74,7 @@ public class UserController {
     }
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
-        Log log2 = new Log("LOGIN-EX", new Date(), "UserController: GET: signup");
+        Log log2 = new Log("LOGIN-EX", new Date(), "UserController: GET: login");
         logService.addLog(log2);
         logger.info("Se realizo peticion get /login");
         return "login";
@@ -107,6 +107,8 @@ public class UserController {
                 .forEach(userService::deleteUser);
 
         model.addAttribute("usersList", userService.getUsers());
+        Log log2 = new Log("PET", new Date(), "UserController: GET: user/delete");
+        logService.addLog(log2);
         return "redirect:list";
     }
 }

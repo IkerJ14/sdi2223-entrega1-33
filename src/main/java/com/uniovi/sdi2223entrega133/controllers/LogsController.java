@@ -34,4 +34,13 @@ public class LogsController {
         model.addAttribute("listLogs", logService.getLogs());
         return "log/list";
     }
+
+    @RequestMapping("/log/filter")
+    public String filterLogs(Model model, @RequestParam String filter) {
+        Log log = new Log("PET", new Date(), "GET: /log/filter");
+        logService.addLog(log);
+
+        model.addAttribute("listLogs", logService.getLogsFilteredBy(filter));
+        return "log/list";
+    }
 }

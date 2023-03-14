@@ -9,14 +9,19 @@
 <nav th:replace="fragments/nav"/>
 <div class="container" id="main-container">
     <h2 th:text="#{log.title}"></h2>
-    <a th:href="@{/log/deleteAll}" class="btn btn-danger">Eliminar</a>
+    <a th:href="@{/log/deleteAll}" class="btn btn-danger" th:text="#{log.del}"></a>
     <div class="table-responsive" id="tableLogs">
+        <a th:href="@{/log/filter(filter='PET')}" class="btn btn-light">PET</a>
+        <a th:href="@{/log/filter(filter='ALTA')}" class="btn btn-light">ALTA</a>
+        <a th:href="@{/log/filter(filter='LOGIN-EX')}" class="btn btn-light">LOGIN-EX</a>
+        <a th:href="@{/log/filter(filter='LOGIN-ERR')}" class="btn btn-light">LOGIN-ERR</a>
+        <a th:href="@{/log/filter(filter='LOGOUT')}" class="btn btn-light">LOGOUT</a>
         <table class="table table-hover">
             <thead>
             <tr>
-                <th scope="col">a </th>
-                <th scope="col">b </th>
-                <th scope="col">c </th>
+                <th scope="col" th:text="#{log.date}"> </th>
+                <th scope="col" th:text="#{log.type}"> </th>
+                <th scope="col" th:text="#{log.text}"></th>
             </tr>
             </thead>
             <tbody>

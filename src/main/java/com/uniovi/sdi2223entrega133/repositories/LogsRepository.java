@@ -8,6 +8,9 @@ import java.util.*;
 
 public interface LogsRepository extends CrudRepository<Log, Long> {
 
-    @Query("SELECT l FROM Log l ")
+    @Query("SELECT l FROM Log l ORDER BY l.date desc")
     List<Log> findAll();
+
+    @Query("SELECT l FROM Log l WHERE l.logType = ?1 ORDER BY l.date desc")
+    List<Log> findFiltered(String filter);
 }
