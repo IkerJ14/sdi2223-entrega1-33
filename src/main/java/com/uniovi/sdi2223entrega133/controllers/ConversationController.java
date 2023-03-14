@@ -1,14 +1,9 @@
 package com.uniovi.sdi2223entrega133.controllers;
 
-import com.uniovi.sdi2223entrega133.entities.Conversation;
-import com.uniovi.sdi2223entrega133.entities.ConversationMessage;
-import com.uniovi.sdi2223entrega133.entities.Offer;
-import com.uniovi.sdi2223entrega133.entities.User;
-import com.uniovi.sdi2223entrega133.services.ConversationMessageService;
-import com.uniovi.sdi2223entrega133.services.ConversationService;
-import com.uniovi.sdi2223entrega133.services.OffersService;
-import com.uniovi.sdi2223entrega133.services.UserService;
+import com.uniovi.sdi2223entrega133.entities.*;
+import com.uniovi.sdi2223entrega133.services.*;
 import com.uniovi.sdi2223entrega133.validators.MessageValidator;
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -24,11 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.LinkedList;
+import java.util.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 @Controller
 public class ConversationController {
-
+    final static Logger logger = LoggerFactory.getLogger(ConversationController.class);
     @Autowired
     private OffersService offersService;
 
@@ -44,6 +41,8 @@ public class ConversationController {
     @Autowired
     private MessageValidator messageValidator;
 
+    @Autowired
+    private LogsService logService;
     @RequestMapping("/conversation/{idOffer}/{emailBuyer}")
     public String getConversation(@PathVariable Long idOffer, @PathVariable String emailBuyer, Model model) {
         Offer offer = offersService.getOffer(idOffer).get();
@@ -62,6 +61,9 @@ public class ConversationController {
 
         model.addAttribute("conversation", conversation);
 
+        logger.info("Se realizo peticion get /conversation/" + idOffer + "/" + emailBuyer);
+        Log log2 = new Log("PET", new Date(), "ConversationController: GET: conversation/"+ idOffer + "/" + emailBuyer);
+        logService.addLog(log2);
         return "/conversation/offer_conversation";
     }
 
@@ -78,6 +80,9 @@ public class ConversationController {
 
         model.addAttribute("conversation", conversation);
 
+        logger.info("Se realizo peticion get /conversation/message");
+        Log log2 = new Log("PET", new Date(), "ConversationController: GET: conversation/message");
+        logService.addLog(log2);
         return "/conversation/offer_conversation";
     }
 
@@ -92,6 +97,9 @@ public class ConversationController {
         model.addAttribute("listConversations", conversations.getContent());
         model.addAttribute("page", conversations);
 
+        logger.info("Se realizo peticion get /conversation/list");
+        Log log2 = new Log("PET", new Date(), "ConversationController: GET: conversation/list");
+        logService.addLog(log2);
         return "/conversation/list";
     }
 }

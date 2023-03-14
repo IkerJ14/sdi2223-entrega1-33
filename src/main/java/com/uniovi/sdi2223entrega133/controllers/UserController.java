@@ -1,8 +1,7 @@
 package com.uniovi.sdi2223entrega133.controllers;
 
-import com.uniovi.sdi2223entrega133.entities.User;
-import com.uniovi.sdi2223entrega133.services.SecurityService;
-import com.uniovi.sdi2223entrega133.services.UserService;
+import com.uniovi.sdi2223entrega133.entities.*;
+import com.uniovi.sdi2223entrega133.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,10 +12,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.uniovi.sdi2223entrega133.validators.SignUpFormValidator;
-import com.uniovi.sdi2223entrega133.services.RolesService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.*;
 
 @Controller
 public class UserController {
+    final static Logger logger = LoggerFactory.getLogger(UserController.class);
     @Autowired
     private UserService userService;
     @Autowired
@@ -25,14 +28,24 @@ public class UserController {
     private SecurityService securityService;
     @Autowired
     private SignUpFormValidator signUpFormValidator;
+
+    @Autowired
+    private LogsService logService;
     @RequestMapping(value = {"/home"}, method = RequestMethod.GET)
     public String home(Model model) {
+        Log log = new Log("PET", new Date(), "UserController: GET: home");
+        logService.addLog(log);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("Se realizo peticion get /home");
         return "home";
     }
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signup(Model model) {
+
+        Log log = new Log("ALTA", new Date(), "UserController: GET: signup");
+        logService.addLog(log);
         model.addAttribute("user", new User());
+        logger.info("Se realizo peticion get /signup");
         return "signup";
     }
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
@@ -40,27 +53,42 @@ public class UserController {
         signUpFormValidator.validate(user,result);
         if(result.hasErrors()){
             model.addAttribute("user", user);
+            logger.info("Se realizo peticion post /signup pero resulto erronea");
             return "signup";
 
         }
         user.setRole(rolesService.getRoles()[0]);
         userService.addUser(user);
         securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
+        Log log = new Log("PET", new Date(), "UserController: POST: signup");
+        logService.addLog(log);
+        Log log2 = new Log("ALTA", new Date(), "UserController: POST: signup");
+        logService.addLog(log2);
+        logger.info("Se realizo peticion post /signup");
         return "redirect:home";
     }
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
+        Log log2 = new Log("LOGIN-EX", new Date(), "UserController: GET: signup");
+        logService.addLog(log2);
+        logger.info("Se realizo peticion get /login");
         return "login";
     }
 
     @RequestMapping("/user/list")
     public String getList(Model model) {
         model.addAttribute("usersList", userService.getUsers());
+        Log log2 = new Log("PET", new Date(), "UserController: GET: user/list");
+        logService.addLog(log2);
+        logger.info("Se realizo peticion get /user/list");
         return "user/list";
     }
     @RequestMapping("/user/list/update")
     public String updateList(Model model){
         model.addAttribute("usersList", userService.getUsers() );
+        Log log2 = new Log("PET", new Date(), "UserController: GET: user/list/update");
+        logService.addLog(log2);
+        logger.info("Se realizo peticion get /user/list/update");
         return "user/list :: tableUsers";
     }
 }

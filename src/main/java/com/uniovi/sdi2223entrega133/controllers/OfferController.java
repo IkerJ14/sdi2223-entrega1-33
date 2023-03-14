@@ -1,9 +1,7 @@
 package com.uniovi.sdi2223entrega133.controllers;
 
-import com.uniovi.sdi2223entrega133.entities.Offer;
-import com.uniovi.sdi2223entrega133.entities.User;
-import com.uniovi.sdi2223entrega133.services.OffersService;
-import com.uniovi.sdi2223entrega133.services.UserService;
+import com.uniovi.sdi2223entrega133.entities.*;
+import com.uniovi.sdi2223entrega133.services.*;
 import com.uniovi.sdi2223entrega133.validators.OfferValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,10 +15,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDate;
-import java.util.LinkedList;
+import java.util.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 public class OfferController {
+    final static Logger logger = LoggerFactory.getLogger(OfferController.class);
     @Autowired
     private OffersService offersService;
 
@@ -29,6 +31,9 @@ public class OfferController {
 
     @Autowired
     private OfferValidator offerValidator;
+
+    @Autowired
+    private LogsService logService;
 
     @RequestMapping("/offer/list")
     public String getList(Pageable pageable, Model model, Principal principal,
@@ -45,6 +50,9 @@ public class OfferController {
         model.addAttribute("offerList", offers.getContent());
         model.addAttribute("page", offers);
 
+        Log log2 = new Log("PET", new Date(), "OfferController: GET: offer/list");
+        logService.addLog(log2);
+        logger.info("Se realizo peticion get /offer/list");
         return "offer/list";
     }
 
@@ -55,6 +63,9 @@ public class OfferController {
 
         model.addAttribute("userOfferList", offersService.getOffersByUser(user));
 
+        Log log2 = new Log("PET", new Date(), "OfferController: GET: offer/user_list");
+        logService.addLog(log2);
+        logger.info("Se realizo peticion get /offer/user_list");
         return "offer/user_list";
     }
 
@@ -63,6 +74,9 @@ public class OfferController {
         Offer offer = new Offer();
         offer.setPrice(0.0);
         model.addAttribute("offer", offer);
+        Log log2 = new Log("PET", new Date(), "OfferController: GET: offer/add");
+        logService.addLog(log2);
+        logger.info("Se realizo peticion get /offer/add");
         return "offer/add";
     }
 
@@ -70,6 +84,7 @@ public class OfferController {
     public String setOffer(Principal principal, @ModelAttribute @Validated Offer offer, BindingResult result) {
         offerValidator.validate(offer, result);
         if (result.hasErrors()) {
+            logger.info("Se realizo peticion post /offer/add pero resulto erronea");
             return "/offer/add";
         }
 
@@ -80,12 +95,18 @@ public class OfferController {
         offer.setSold(false);
 
         offersService.addOffer(offer);
+        Log log2 = new Log("PET", new Date(), "OfferController: POST: offer/add");
+        logService.addLog(log2);
+        logger.info("Se realizo peticion post /offer/add");
         return "redirect:/offer/user_list";
     }
 
     @RequestMapping("/offer/delete/{id}")
     public String deleteMark(@PathVariable Long id) {
         offersService.deleteOffer(id);
+        Log log2 = new Log("PET", new Date(), "OfferController: GET: offer/delete/" + id);
+        logService.addLog(log2);
+        logger.info("Se realizo peticion get /offer/delete/" + id);
         return "redirect:/offer/user_list";
     }
 
@@ -95,6 +116,9 @@ public class OfferController {
         User user = usersService.getUserByEmail(email);
 
         model.addAttribute("userOfferList", offersService.getOffersByUser(user));
+        logger.info("Se realizo peticion get /offer/user_list/update");
+        Log log2 = new Log("PET", new Date(), "OfferController: GET: offer/user_list/update");
+        logService.addLog(log2);
         return "offer/user_list :: tableUserOffers";
     }
 
@@ -108,6 +132,9 @@ public class OfferController {
         model.addAttribute("offerList", offers.getContent());
         model.addAttribute("page", offers);
 
+        logger.info("Se realizo peticion get /offer/list/update");
+        Log log2 = new Log("PET", new Date(), "OfferController: GET: offer/list/update");
+        logService.addLog(log2);
         return "offer/list :: tableOffers";
     }
 
@@ -121,6 +148,9 @@ public class OfferController {
                 && !offer.getUser().getEmail().equals(user.getEmail())) {
             offersService.buyOffer(offer, user);
         }
+        logger.info("Se realizo peticion get /offer/"+ id + "/nosold");
+        Log log2 = new Log("PET", new Date(), "OfferController: GET: /offer/"+ id + "/nosold");
+        logService.addLog(log2);
         return "redirect:/offer/purchaseList";
     }
 
@@ -130,6 +160,9 @@ public class OfferController {
         User user = usersService.getUserByEmail(userEmail);
 
         model.addAttribute("purchases", user.getBoughtOffers());
+        logger.info("Se realizo peticion get /offer/purchaseList");
+        Log log2 = new Log("PET", new Date(), "OfferController: GET: offer/purchaseList");
+        logService.addLog(log2);
         return "offer/purchaseList";
     }
 
