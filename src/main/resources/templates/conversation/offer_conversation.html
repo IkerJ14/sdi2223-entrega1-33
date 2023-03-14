@@ -38,6 +38,7 @@
       <input name="idBuyer" type="hidden" class="form-control" th:value="${conversation.buyer.id}" >
     </div>
     <button type="submit" class="btn btn-primary" th:text="#{button.send}"> </button>
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
   </form>
 </div>
 </body>

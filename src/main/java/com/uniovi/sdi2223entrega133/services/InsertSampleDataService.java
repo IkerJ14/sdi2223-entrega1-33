@@ -269,6 +269,57 @@ public class InsertSampleDataService {
 
         user12.setOffers(user12Offers);
 
+        Set<Offer> user13Offers = new HashSet<>() {
+            {
+                add(new Offer("Nevera", "Nevera de 2 puertas", LocalDate.of(2016, 10, 29), 200, user13));
+                add(new Offer("Baca", "Baca para coche de 2 piezas", LocalDate.of(2019, 3, 14), 50, user13));
+                add(new Offer("Rastrillo", "Rastrillo para jardín", LocalDate.of(2022, 5, 15), 20, user13));
+                add(new Offer("Escobilla", "Escobilla de vater", LocalDate.of(2018, 4, 1), 15, user13));
+                add(new Offer("Gafas", "Gafas de pasta sin cristal para disfraces", LocalDate.of(2017, 7, 30), 10, user13));
+                add(new Offer("Tornillos", "Caja con 500 tornillos", LocalDate.of(2020, 9, 15), 30, user13));
+                add(new Offer("Pintura", "Caja de botes de pintura, 24 colores", LocalDate.of(2018, 7, 13), 20, user13));
+                add(new Offer("Ajedrez", "Juego de ajedrez de madera", LocalDate.of(2019, 1, 24), 13, user13));
+                add(new Offer("Reposapies", "Reposapies de plástico para oficina", LocalDate.of(2020, 5, 11), 17, user13));
+                add(new Offer("Tapones de oidos", "Pack de 6 tapones de oidos para dormir", LocalDate.of(2023, 3, 4),  5, user13));
+            }
+        };
+
+        user13.setOffers(user13Offers);
+
+        Set<Offer> user14Offers = new HashSet<>() {
+            {
+                add(new Offer("Tupper", "Tupperware de plástico", LocalDate.of(2020, 2, 10), 7, user14));
+                add(new Offer("Cámara", "Cámara de video digital", LocalDate.of(2021, 9, 9), 55, user14));
+                add(new Offer("Mando", "Mando universal de garaje", LocalDate.of(2019, 3, 1), 10, user14));
+                add(new Offer("Mesa", "Mesa de comedor de madera", LocalDate.of(2018, 5, 13), 250, user14));
+                add(new Offer("Hornillo", "Hornillo de gas para camping", LocalDate.of(2021, 3, 7), 15, user14));
+                add(new Offer("Tiza", "Pack de 24 tizas", LocalDate.of(2023, 1, 21), 6, user14));
+                add(new Offer("Despertador", "Despertador con radio", LocalDate.of(2020, 10, 29), 30, user14));
+                add(new Offer("Calefactor", "Calefactor de bajo consumo", LocalDate.of(2021, 7, 14), 25, user14));
+                add(new Offer("Alcachofa", "Alcachofa de ducha con 3 chorros", LocalDate.of(2023, 2, 21), 20, user14));
+                add(new Offer("Libro", "El Ruido y la Furia", LocalDate.of(2019, 11, 27),  35, user14));
+            }
+        };
+
+        user14.setOffers(user14Offers);
+
+        Set<Offer> user15Offers = new HashSet<>() {
+            {
+                add(new Offer("Monitor", "Monitor para PC de 24 pulgadas", LocalDate.of(2018, 4, 22), 30, user15));
+                add(new Offer("Proyector", "Proyector portátil", LocalDate.of(2019, 7, 15), 50, user15));
+                add(new Offer("Tostadora", "Tostadora de dos ranuras", LocalDate.of(2021, 5, 26), 15, user15));
+                add(new Offer("Tabla de planchar", "Tabla de planchar, 124 x 40 cm", LocalDate.of(2019, 3, 21), 30, user15));
+                add(new Offer("Lavadora", "Lavadora de 9 kg", LocalDate.of(2022, 4, 16), 200, user15));
+                add(new Offer("Extintor", "Extintor para incendios de 1 kg", LocalDate.of(2018, 9, 17), 10, user15));
+                add(new Offer("Exprimidor", "Exprimidor eléctrico para zumos", LocalDate.of(2021, 5, 23), 13, user15));
+                add(new Offer("Bandeja", "Bandeja antideslizante de plástico", LocalDate.of(2017, 4, 3), 5, user15));
+                add(new Offer("Moldes", "Moldes para hornos", LocalDate.of(2021, 4, 14), 30, user15));
+                add(new Offer("Película", "BluRay de Cazafantasmas", LocalDate.of(2022, 5, 18),  40, user15));
+            }
+        };
+
+        user15.setOffers(user15Offers);
+
         User admin = new User("admin@email.com", "Admin", "Admin");
         admin.setPassword("admin");
         admin.setRole(rolesService.getRoles()[1]);

@@ -16,6 +16,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import com.uniovi.sdi2223entrega133.services.RolesService;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Arrays;
+import java.util.Date;
 
 @Controller
 public class UserController {
@@ -90,5 +95,18 @@ public class UserController {
         logService.addLog(log2);
         logger.info("Se realizo peticion get /user/list/update");
         return "user/list :: tableUsers";
+    }
+
+    @RequestMapping("/user/delete")
+    public String delete(@RequestParam(required = false) String id, Model model) {
+        if(id == null)
+            return "redirect:list";
+
+        Arrays.stream(id.split(","))
+                .map(Long::parseLong)
+                .forEach(userService::deleteUser);
+
+        model.addAttribute("usersList", userService.getUsers());
+        return "redirect:list";
     }
 }

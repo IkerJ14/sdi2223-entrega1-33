@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head"/>
 <body>
 <nav th:replace="fragments/nav"/>
@@ -14,6 +13,14 @@
         <button type="submit" class="btn btn-primary" th:text="#{form.submit}"></button>
     </form>
     <p th:text="#{offer.list-description}"></p>
+    <div>
+        <p class="text-danger" th:if="${error_owner}" th:text="#{Error.purchase.offer.owner}">
+            Un usuario no puede comprar su propia oferta</p>
+        <p class="text-danger" th:if="${error_price}" th:text="#{Error.purchase.price.notenough}">
+            El usuario no dispone de dinero suficiente para comprar la oferta</p>
+        <p class="text-danger" th:if="${error_sold}" th:text="#{Error.purchase.offer.sold}">
+            La oferta que se está intentando comprar ya fue comprada</p>
+    </div>
     <button type="button" id="updateButton" class="btn btn-primary" th:text="#{update.text}"></button>
     <script th:inline="javascript">
         /*<![CDATA[*/
@@ -43,7 +50,7 @@
                 <td scope="row" th:text="${offer.title}"></td>
                 <td scope="row" th:text="${offer.description}"></td>
                 <td scope="row" th:text="${offer.date}"></td>
-                <td scope="row" th:text="${offer.price} + €"></td>
+                <td scope="row" th:text="${offer.price} + '€'"></td>
                 <td th:if="${offer.sold}" th:text="#{offer.sold}"></td>
                 <td>
                 <div th:unless="${offer.sold}">

@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -139,18 +140,31 @@ public class OfferController {
     }
 
     @RequestMapping("/offer/{id}/nosold")
-    public String buyOffer(@PathVariable Long id, Principal principal) {
+    public String buyOffer(@PathVariable Long id, Principal principal, RedirectAttributes redAtt) {
         String userEmail = principal.getName();
         User user = usersService.getUserByEmail(userEmail);
         Offer offer = offersService.getOffer(id).get();
 
-        if (!offer.isSold() && offer.getPrice() <= user.getCartera()
-                && !offer.getUser().getEmail().equals(user.getEmail())) {
-            offersService.buyOffer(offer, user);
+        int error = offersService.buyOffer(offer, user);
+
+        switch (error) {
+            case 0:
+                redAtt.addFlashAttribute("error", false);
+                break;
+            case 1:
+                redAtt.addFlashAttribute("error_owner", true);
+                break;
+            case 2:
+                redAtt.addFlashAttribute("error_price", true);
+                break;
+            case 3:
+                redAtt.addFlashAttribute("error_sold", true);
+                break;
         }
         logger.info("Se realizo peticion get /offer/"+ id + "/nosold");
         Log log2 = new Log("PET", new Date(), "OfferController: GET: /offer/"+ id + "/nosold");
         logService.addLog(log2);
+
         return "redirect:/offer/purchaseList";
     }
 
@@ -163,6 +177,7 @@ public class OfferController {
         logger.info("Se realizo peticion get /offer/purchaseList");
         Log log2 = new Log("PET", new Date(), "OfferController: GET: offer/purchaseList");
         logService.addLog(log2);
+        model.addAttribute("purchases", usersService.getBoughtOffersFromUser(user));
         return "offer/purchaseList";
     }
 

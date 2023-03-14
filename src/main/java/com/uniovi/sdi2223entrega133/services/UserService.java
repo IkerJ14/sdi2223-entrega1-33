@@ -1,6 +1,6 @@
 package com.uniovi.sdi2223entrega133.services;
 
-import com.uniovi.sdi2223entrega133.entities.User;
+import com.uniovi.sdi2223entrega133.entities.*;
 import com.uniovi.sdi2223entrega133.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -35,5 +35,9 @@ public class UserService {
     }
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+
+    public List<Offer> getBoughtOffersFromUser(User user) {
+        return userRepository.getBoughtOffers(user);
     }
 }
