@@ -50,6 +50,7 @@ public class OfferController {
 
         model.addAttribute("offerList", offers.getContent());
         model.addAttribute("page", offers);
+        model.addAttribute("activeUser", user);
 
         Log log2 = new Log("PET", new Date(), "OfferController: GET: offer/list");
         logService.addLog(log2);
@@ -63,6 +64,7 @@ public class OfferController {
         User user = usersService.getUserByEmail(email);
 
         model.addAttribute("userOfferList", offersService.getOffersByUser(user));
+        model.addAttribute("activeUser", user);
 
         Log log2 = new Log("PET", new Date(), "OfferController: GET: offer/user_list");
         logService.addLog(log2);
@@ -71,9 +73,13 @@ public class OfferController {
     }
 
     @RequestMapping(value="/offer/add")
-    public String getOffer(Model model){
+    public String getOffer(Model model, Principal principal){
         Offer offer = new Offer();
         offer.setPrice(0.0);
+
+        User user = usersService.getUserByEmail(principal.getName());
+
+        model.addAttribute("activeUser", user);
         model.addAttribute("offer", offer);
         Log log2 = new Log("PET", new Date(), "OfferController: GET: offer/add");
         logService.addLog(log2);
@@ -82,7 +88,8 @@ public class OfferController {
     }
 
     @RequestMapping(value = "/offer/add", method = RequestMethod.POST)
-    public String setOffer(Principal principal, @ModelAttribute @Validated Offer offer, BindingResult result) {
+    public String setOffer(Principal principal, @ModelAttribute @Validated Offer offer, BindingResult result,
+            Model model) {
         offerValidator.validate(offer, result);
         if (result.hasErrors()) {
             logger.info("Se realizo peticion post /offer/add pero resulto erronea");
@@ -95,6 +102,8 @@ public class OfferController {
         offer.setDate(LocalDate.now());
         offer.setSold(false);
 
+        model.addAttribute("activeUser", user);
+
         offersService.addOffer(offer);
         Log log2 = new Log("PET", new Date(), "OfferController: POST: offer/add");
         logService.addLog(log2);
@@ -103,7 +112,11 @@ public class OfferController {
     }
 
     @RequestMapping("/offer/delete/{id}")
-    public String deleteMark(@PathVariable Long id) {
+    public String deleteMark(@PathVariable Long id, Model model, Principal principal) {
+
+        User user = usersService.getUserByEmail(principal.getName());
+        model.addAttribute("activeUser", user);
+
         offersService.deleteOffer(id);
         Log log2 = new Log("PET", new Date(), "OfferController: GET: offer/delete/" + id);
         logService.addLog(log2);
@@ -116,6 +129,7 @@ public class OfferController {
         String email = principal.getName();
         User user = usersService.getUserByEmail(email);
 
+        model.addAttribute("activeUser", user);
         model.addAttribute("userOfferList", offersService.getOffersByUser(user));
         logger.info("Se realizo peticion get /offer/user_list/update");
         Log log2 = new Log("PET", new Date(), "OfferController: GET: offer/user_list/update");
@@ -130,6 +144,7 @@ public class OfferController {
         Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
         offers = offersService.getOffers(pageable);
 
+        model.addAttribute("activeUser", user);
         model.addAttribute("offerList", offers.getContent());
         model.addAttribute("page", offers);
 
@@ -140,12 +155,14 @@ public class OfferController {
     }
 
     @RequestMapping("/offer/{id}/nosold")
-    public String buyOffer(@PathVariable Long id, Principal principal, RedirectAttributes redAtt) {
+    public String buyOffer(@PathVariable Long id, Principal principal, RedirectAttributes redAtt, Model model) {
         String userEmail = principal.getName();
         User user = usersService.getUserByEmail(userEmail);
         Offer offer = offersService.getOffer(id).get();
 
         String error = offersService.buyOffer(offer, user);
+
+        model.addAttribute("activeUser", user);
 
         if (error.equals("")) {
             redAtt.addFlashAttribute(error, false);
@@ -165,6 +182,8 @@ public class OfferController {
     public String getPurchaseList(Model model, Principal principal) {
         String userEmail = principal.getName();
         User user = usersService.getUserByEmail(userEmail);
+
+        model.addAttribute("activeUser", user);
 
         model.addAttribute("purchases", user.getBoughtOffers());
         logger.info("Se realizo peticion get /offer/purchaseList");

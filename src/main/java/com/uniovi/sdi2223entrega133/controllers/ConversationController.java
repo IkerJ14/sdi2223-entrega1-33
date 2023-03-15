@@ -49,7 +49,11 @@ public class ConversationController {
     @Autowired
     private LogsService logService;
     @RequestMapping("/conversation/{idOffer}/{emailBuyer}")
-    public String getConversation(@PathVariable Long idOffer, @PathVariable String emailBuyer, Model model) {
+    public String getConversation(@PathVariable Long idOffer, @PathVariable String emailBuyer, Model model,
+                                  Principal principal) {
+        User activeUser = usersService.getUserByEmail(principal.getName());
+        model.addAttribute("activeUser", activeUser);
+
         Offer offer = offersService.getOffer(idOffer).get();
 
         User buyer = usersService.getUserByEmail(emailBuyer);
@@ -116,6 +120,7 @@ public class ConversationController {
         conversationService.addMessageToConversation(conversation, message);
         conversationService.addConversation(conversation);
 
+        model.addAttribute("activeUser", currentUser);
         model.addAttribute("conversation", conversation);
         model.addAttribute("message", message);
 
@@ -135,6 +140,7 @@ public class ConversationController {
 
         model.addAttribute("listConversations", conversations.getContent());
         model.addAttribute("page", conversations);
+        model.addAttribute("activeUser", user);
 
         logger.info("Se realizo peticion get /conversation/list");
         Log log2 = new Log("PET", new Date(), "ConversationController: GET: conversation/list");
