@@ -145,22 +145,15 @@ public class OfferController {
         User user = usersService.getUserByEmail(userEmail);
         Offer offer = offersService.getOffer(id).get();
 
-        int error = offersService.buyOffer(offer, user);
+        String error = offersService.buyOffer(offer, user);
 
-        switch (error) {
-            case 0:
-                redAtt.addFlashAttribute("error", false);
-                return "redirect:/offer/purchaseList";
-            case 1:
-                redAtt.addFlashAttribute("error_owner", true);
-                break;
-            case 2:
-                redAtt.addFlashAttribute("error_price", true);
-                break;
-            case 3:
-                redAtt.addFlashAttribute("error_sold", true);
-                break;
+        if (error.equals("")) {
+            redAtt.addFlashAttribute(error, false);
+            return "redirect:/offer/purchaseList";
+        } else {
+            redAtt.addFlashAttribute(error, true);
         }
+
         logger.info("Se realizo peticion get /offer/"+ id + "/nosold");
         Log log2 = new Log("PET", new Date(), "OfferController: GET: /offer/"+ id + "/nosold");
         logService.addLog(log2);
