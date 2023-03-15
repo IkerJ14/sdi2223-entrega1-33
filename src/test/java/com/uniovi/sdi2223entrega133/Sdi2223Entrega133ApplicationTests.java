@@ -1,6 +1,7 @@
 package com.uniovi.sdi2223entrega133;
 
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -52,6 +53,22 @@ class Sdi2223Entrega133ApplicationTests {
         driver.quit();
     }
 
+    // ---------------- Tests apartado 1 ----------------
+
+    // ---------------- Tests apartado 2 ----------------
+
+    // ---------------- Tests apartado 3 ----------------
+
+    // ---------------- Tests apartado 4 ----------------
+
+    // ---------------- Tests apartado 5 ----------------
+
+    // ---------------- Tests apartado 6 ----------------
+
+    /*
+        Ir al formulario de alta de oferta, rellenarla con datos válidos y pulsar el botón Enviar.
+        Comprobar que la oferta sale en el listado de ofertas de dicho usuario.
+     */
     @Test
     @Order(15)
     public void PR15() {
@@ -76,6 +93,10 @@ class Sdi2223Entrega133ApplicationTests {
         PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
 
+    /*
+        Ir al formulario de alta de oferta, rellenarla con datos inválidos (precio negativo) y pulsar el
+        botón Enviar. Comprobar que se muestra el mensaje de campo inválido.
+     */
     @Test
     @Order(16)
     public void PR16() {
@@ -103,6 +124,12 @@ class Sdi2223Entrega133ApplicationTests {
         PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
 
+    // ---------------- Tests apartado 7 ----------------
+
+    /*
+        Mostrar el listado de ofertas para dicho usuario y comprobar que se muestran todas los que
+        existen para este usuario.
+     */
     @Test
     @Order(17)
     public void PR17() {
@@ -119,5 +146,169 @@ class Sdi2223Entrega133ApplicationTests {
 
         PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
+
+    // ---------------- Tests apartado 8 ----------------
+
+    // ---------------- Tests apartado 9 ----------------
+
+    // ---------------- Tests apartado 10 ---------------
+
+    /*
+        Sobre una búsqueda determinada (a elección del desarrollador), comprar una oferta que deja
+        un saldo positivo en el contador del comprador. Comprobar que el contador se actualiza correctamente
+        en la vista del comprador.
+     */
+    @Test
+    @Order(22)
+    public void PR22() {
+        // Iniciamos sesión
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+        // Clicamos el menú de ofertas
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'offer-menu')]/a");
+        elements.get(0).click();
+        // Y vamos a la lista global de ofertas
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/list')]");
+        elements.get(0).click();
+        // Buscamos ofertas por 'Albornoz' (cuesta 20€)
+        WebElement buscador = driver.findElement(By.name("searchText"));
+        buscador.click();
+        buscador.clear();
+        buscador.sendKeys("Albornoz");
+        driver.findElement(By.className("btn")).click();
+        // Comprobamos que el usuario tiene 100€
+        PO_View.checkElementBy(driver, "text", "100.0€");
+        // Compramos la oferta
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(text(), 'Comprar')]");
+        // Comprobamos que el saldo se ha reducido
+        PO_View.checkElementBy(driver, "text", "80.0€");
+    }
+
+    /*
+        Sobre una búsqueda determinada (a elección del desarrollador), comprar una oferta que deja
+        un saldo 0 en el contador del comprador. Comprobar que el contador se actualiza correctamente en la
+        vista del comprador.
+     */
+    @Test
+    @Order(23)
+    public void PR23() {
+        // Iniciamos sesión
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "user02@email.com", "user02");
+        // Clicamos el menú de ofertas
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'offer-menu')]/a");
+        elements.get(0).click();
+        // Y vamos a la lista global de ofertas
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/list')]");
+        elements.get(0).click();
+        // Buscamos ofertas por 'Mesita' (cuesta 100€)
+        WebElement buscador = driver.findElement(By.name("searchText"));
+        buscador.click();
+        buscador.clear();
+        buscador.sendKeys("Mesita");
+        driver.findElement(By.className("btn")).click();
+        // Comprobamos que el usuario tiene 100€
+        PO_View.checkElementBy(driver, "text", "100.0€");
+        // Compramos la oferta
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(text(), 'Comprar')]");
+        elements.get(0).click();
+        // Comprobamos que el saldo se ha reducido
+        PO_View.checkElementBy(driver, "text", "0.0€");
+    }
+
+    /*
+        Sobre una búsqueda determinada (a elección del desarrollador), intentar comprar una oferta
+        que esté por encima de saldo disponible del comprador. Y comprobar que se muestra el mensaje de
+        saldo no suficiente.
+     */
+    @Test
+    @Order(24)
+    public void PR24() {
+        // Iniciamos sesión
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "user03@email.com", "user03");
+        // Clicamos el menú de ofertas
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'offer-menu')]/a");
+        elements.get(0).click();
+        // Y vamos a la lista global de ofertas
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/list')]");
+        elements.get(0).click();
+        // Buscamos ofertas por 'Mesa' (cuesta 120€)
+        WebElement buscador = driver.findElement(By.name("searchText"));
+        buscador.click();
+        buscador.clear();
+        buscador.sendKeys("Mesa");
+        driver.findElement(By.className("btn")).click();
+        // Comprobamos que el usuario tiene 100€
+        PO_View.checkElementBy(driver, "text", "100.0€");
+        // Intentamos comprar la oferta
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(text(), 'Comprar')]");
+        elements.get(0).click();
+        // Comprobamos que se muestra el error
+        PO_View.checkElementBy(driver, "text", "El usuario no dispone de dinero suficiente para comprar la oferta");
+    }
+
+    // ---------------- Tests apartado 11 ---------------
+
+    /*
+        Ir a la opción de ofertas compradas del usuario y mostrar la lista. Comprobar que aparecen
+        las ofertas que deben aparecer.
+     */
+    @Test
+    @Order(25)
+    public void PR25() {
+        // Iniciamos sesión
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "user04@email.com", "user04");
+        // Clicamos el menú de ofertas
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'offer-menu')]/a");
+        elements.get(0).click();
+        // Y vamos a la lista global de ofertas
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/list')]");
+        elements.get(0).click();
+        // Primero buscamos ofertas por 'Cortacesped' (no podemos comprarla)
+        WebElement buscador = driver.findElement(By.name("searchText"));
+        buscador.click();
+        buscador.clear();
+        buscador.sendKeys("Cortacesped");
+        driver.findElement(By.className("btn")).click();
+        // Intentamos comprar la oferta
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(text(), 'Comprar')]");
+        elements.get(0).click();
+        // Ahora buscamos por 'pescar' (podemos comprarla)
+        buscador = driver.findElement(By.name("searchText"));
+        buscador.click();
+        buscador.clear();
+        buscador.sendKeys("pescar");
+        driver.findElement(By.className("btn")).click();
+        // Compramos la oferta
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(text(), 'Comprar')]");
+        elements.get(0).click();
+        // Volvemos a la lista de ofertas
+        elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'offer-menu')]/a");
+        elements.get(0).click();
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/list')]");
+        elements.get(0).click();
+        // Buscamos por 'libro' (también podemos comprarla)
+        buscador = driver.findElement(By.name("searchText"));
+        buscador.click();
+        buscador.clear();
+        buscador.sendKeys("libro");
+        driver.findElement(By.className("btn")).click();
+        // Compramos la oferta
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(text(), 'Comprar')]");
+        elements.get(0).click();
+        // Comprobamos que aparecen las ofertas que hemos comprado
+        PO_View.checkElementBy(driver, "text", "Libro");
+        PO_View.checkElementBy(driver, "text", "Caña de pescar");
+    }
+
+    // ---------------- Tests apartado 12 ---------------
+
+    // ---------------- Tests apartado 13 ---------------
+
+    // ---------------- Tests apartado 14 ---------------
+
+    // ---------------- Tests apartado 15 ---------------
 
 }
