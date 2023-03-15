@@ -259,7 +259,7 @@ class Sdi2223Entrega133ApplicationTests {
     public void PR25() {
         // Iniciamos sesión
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "user04@email.com", "user04");
+        PO_LoginView.fillLoginForm(driver, "user05@email.com", "user05");
         // Clicamos el menú de ofertas
         List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'offer-menu')]/a");
         elements.get(0).click();
@@ -285,9 +285,7 @@ class Sdi2223Entrega133ApplicationTests {
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(text(), 'Comprar')]");
         elements.get(0).click();
         // Volvemos a la lista de ofertas
-        elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'offer-menu')]/a");
-        elements.get(0).click();
-        elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/list')]");
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(text(), 'Volver al catálogo')]");
         elements.get(0).click();
         // Buscamos por 'libro' (también podemos comprarla)
         buscador = driver.findElement(By.name("searchText"));
