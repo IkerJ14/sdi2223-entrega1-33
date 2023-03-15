@@ -53,10 +53,61 @@ class Sdi2223Entrega133ApplicationTests {
     }
 
     @Test
+    @Order(15)
+    public void PR15() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+
+
+        PO_UserOffersView.checkUserOffersPage(driver, PO_Properties.getSPANISH());
+
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'offer-menu')]/a");
+        elements.get(0).click();
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/add')]");
+        // Se pincha en agregar oferta
+        elements.get(0).click();
+        String checkText = "Oferta nueva 1";
+        PO_OfferAddView.fillOfferAddForm(driver, checkText, "Esto es la descripción de una oferta", "50");
+
+        // Se comprueba que la nueva oferta aparece en la página
+        elements = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, elements.get(0).getText());
+
+        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+    }
+
+    @Test
+    @Order(16)
+    public void PR16() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+
+
+        PO_UserOffersView.checkUserOffersPage(driver, PO_Properties.getSPANISH());
+
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'offer-menu')]/a");
+        elements.get(0).click();
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/add')]");
+
+        elements.get(0).click();
+        // Se intenta añadir una oferta con precio negativo
+        PO_OfferAddView.fillOfferAddForm(driver, "Oferta nueva 1", "Esto es la descripción de una oferta", "-50");
+
+        // Se comprueba que aparece el mensaje de error correspondiente
+        List<WebElement> result = PO_UserOffersView.checkElementByKey(driver, "Error.offer.price.negative",
+                PO_Properties.getSPANISH());
+        String checkText = PO_HomeView.getP().getString("Error.offer.price.negative",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText, result.get(0).getText());
+
+        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+    }
+
+    @Test
     @Order(17)
     public void PR17() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+        PO_LoginView.fillLoginForm(driver, "user02@email.com", "user02");
 
         // Si se loguea como usuario estándar correctamente, se accede a la vista de las ofertas propias
         PO_UserOffersView.checkUserOffersPage(driver, PO_Properties.getSPANISH());
@@ -65,6 +116,8 @@ class Sdi2223Entrega133ApplicationTests {
         List<WebElement> markList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
         Assertions.assertEquals(10, markList.size());
+
+        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
 
 }

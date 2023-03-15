@@ -86,7 +86,7 @@ public class OfferController {
         offerValidator.validate(offer, result);
         if (result.hasErrors()) {
             logger.info("Se realizo peticion post /offer/add pero resulto erronea");
-            return "/offer/add";
+            return "offer/add";
         }
 
         String email = principal.getName();
