@@ -389,7 +389,7 @@ class Sdi2223Entrega133ApplicationTests {
         buscador.sendKeys("pescar");
         driver.findElement(By.className("btn")).click();
         //Accedemos a la conversación
-        elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'conversation/69/user05@email')]");
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(text(), 'Conversación')]");
         elements.get(0).click();
         //Ponemos un mensaje
         PO_ConversationView.fillMessageAddForm(driver, "Hola");
@@ -418,7 +418,7 @@ class Sdi2223Entrega133ApplicationTests {
         buscador.sendKeys("pescar");
         driver.findElement(By.className("btn")).click();
         //Accedemos a la conversación
-        elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'conversation/69/user05@email')]");
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(text(), 'Conversación')]");
         elements.get(0).click();
         // Comprobamos que aparece el mensaje anterior
         PO_View.checkElementBy(driver, "text", "Hola");
@@ -445,7 +445,7 @@ class Sdi2223Entrega133ApplicationTests {
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'conversation/list')]");
         elements.get(0).click();
         //Accedemos a la conversación (Solo deberia estar la que usamos en los 2 anteriores tests)
-        elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'conversation/69/user05@email')]");
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(text(), 'Conversación')]");
         elements.get(0).click();
         // Comprobamos que aparece los mensajes anteriores
         PO_View.checkElementBy(driver, "text", "Hola");
