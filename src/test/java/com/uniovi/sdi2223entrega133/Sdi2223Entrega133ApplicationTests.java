@@ -328,6 +328,8 @@ class Sdi2223Entrega133ApplicationTests {
         PO_ConversationView.fillMessageAddForm(driver, "Hola");
         // Comprobamos que aparece el mensaje
         PO_View.checkElementBy(driver, "text", "Hola");
+        //Hacemos logout
+        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
 
     @Test
@@ -357,6 +359,8 @@ class Sdi2223Entrega133ApplicationTests {
         PO_ConversationView.fillMessageAddForm(driver, "Buenas");
         // Comprobamos que aparece el mensaje anterior
         PO_View.checkElementBy(driver, "text", "Buenas");
+        //Hacemos logout
+        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
 
     // ---------------- Tests apartado 13 ---------------
@@ -383,6 +387,8 @@ class Sdi2223Entrega133ApplicationTests {
         PO_ConversationView.fillMessageAddForm(driver, "Adios");
         // Comprobamos que aparece el mensaje anterior
         PO_View.checkElementBy(driver, "text", "Adios");
+        //Hacemos logout
+        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
 
     // ---------------- Tests apartado 14 ---------------
