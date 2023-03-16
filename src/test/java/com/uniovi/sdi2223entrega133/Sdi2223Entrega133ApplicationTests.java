@@ -19,7 +19,7 @@ class Sdi2223Entrega133ApplicationTests {
     static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
     //static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox-bin";
     //static String Geckodriver = "/Users/USUARIO/selenium/geckodriver-v0.30.0-macos";
-//Común a Windows y a MACOSX
+    //Común a Windows y a MACOSX
     static WebDriver driver = getDriver(PathFirefox, Geckodriver);
     static String URL = "http://localhost:8080";
 
@@ -370,7 +370,93 @@ class Sdi2223Entrega133ApplicationTests {
 
     // ---------------- Tests apartado 12 ---------------
 
+    @Test
+    @Order(26)
+    public void PR26() {
+        // Iniciamos sesión
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "user05@email.com", "user05");
+        // Clicamos el menú de ofertas
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'offer-menu')]/a");
+        elements.get(0).click();
+        // Y vamos a la lista global de ofertas
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/list')]");
+        elements.get(0).click();
+        // Ahora buscamos por 'pescar' (podemos conversar)
+        WebElement buscador = driver.findElement(By.name("searchText"));
+        buscador.click();
+        buscador.clear();
+        buscador.sendKeys("pescar");
+        driver.findElement(By.className("btn")).click();
+        //Accedemos a la conversación
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'conversation/69/user05@email')]");
+        elements.get(0).click();
+        //Ponemos un mensaje
+        PO_ConversationView.fillMessageAddForm(driver, "Hola");
+        // Comprobamos que aparece el mensaje
+        PO_View.checkElementBy(driver, "text", "Hola");
+        //Hacemos logout
+        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+    }
+
+    @Test
+    @Order(27)
+    public void PR27() {
+        // Iniciamos sesión
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "user05@email.com", "user05");
+        // Clicamos el menú de ofertas
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'offer-menu')]/a");
+        elements.get(0).click();
+        // Y vamos a la lista global de ofertas
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/list')]");
+        elements.get(0).click();
+        // Ahora buscamos por 'pescar' (podemos conversar)
+        WebElement buscador = driver.findElement(By.name("searchText"));
+        buscador.click();
+        buscador.clear();
+        buscador.sendKeys("pescar");
+        driver.findElement(By.className("btn")).click();
+        //Accedemos a la conversación
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'conversation/69/user05@email')]");
+        elements.get(0).click();
+        // Comprobamos que aparece el mensaje anterior
+        PO_View.checkElementBy(driver, "text", "Hola");
+        //Ponemos un mensaje
+        PO_ConversationView.fillMessageAddForm(driver, "Buenas");
+        // Comprobamos que aparece el mensaje anterior
+        PO_View.checkElementBy(driver, "text", "Buenas");
+        //Hacemos logout
+        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+    }
+
     // ---------------- Tests apartado 13 ---------------
+
+    @Test
+    @Order(28)
+    public void PR28() {
+        // Iniciamos sesión
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "user05@email.com", "user05");
+        // Clicamos el menú de conversaciones
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'conversation-menu')]/a");
+        elements.get(0).click();
+        // Y vamos a la lista de conversaciones activas
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'conversation/list')]");
+        elements.get(0).click();
+        //Accedemos a la conversación (Solo deberia estar la que usamos en los 2 anteriores tests)
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'conversation/69/user05@email')]");
+        elements.get(0).click();
+        // Comprobamos que aparece los mensajes anteriores
+        PO_View.checkElementBy(driver, "text", "Hola");
+        PO_View.checkElementBy(driver, "text", "Buenas");
+        //Ponemos otro mensaje
+        PO_ConversationView.fillMessageAddForm(driver, "Adios");
+        // Comprobamos que aparece el mensaje anterior
+        PO_View.checkElementBy(driver, "text", "Adios");
+        //Hacemos logout
+        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+    }
 
     // ---------------- Tests apartado 14 ---------------
 
