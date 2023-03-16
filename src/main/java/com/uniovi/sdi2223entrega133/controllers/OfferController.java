@@ -92,6 +92,9 @@ public class OfferController {
             Model model) {
         offerValidator.validate(offer, result);
         if (result.hasErrors()) {
+            User user = usersService.getUserByEmail(principal.getName());
+
+            model.addAttribute("activeUser", user);
             logger.info("Se realizo peticion post /offer/add pero resulto erronea");
             return "offer/add";
         }

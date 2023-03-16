@@ -90,6 +90,8 @@ class Sdi2223Entrega133ApplicationTests {
         elements = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, elements.get(0).getText());
 
+        // TODO: Delete offer after checking
+
         PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
 
@@ -140,9 +142,9 @@ class Sdi2223Entrega133ApplicationTests {
         PO_UserOffersView.checkUserOffersPage(driver, PO_Properties.getSPANISH());
 
         // Se deben mostrar las 10 ofertas propias existentes
-        List<WebElement> markList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
+        List<WebElement> offerList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(10, markList.size());
+        Assertions.assertEquals(10, offerList.size());
 
         PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
@@ -150,6 +152,71 @@ class Sdi2223Entrega133ApplicationTests {
     // ---------------- Tests apartado 8 ----------------
 
     // ---------------- Tests apartado 9 ----------------
+
+    /*
+        Hacer una búsqueda con el campo vacío y comprobar que se muestra la página que
+        corresponde con el listado de las ofertas existentes en el sistema
+     */
+    @Test
+    @Order(20)
+    public void PR20() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+
+        // Si se loguea como usuario estándar correctamente, se accede a la vista de las ofertas propias
+        PO_UserOffersView.checkUserOffersPage(driver, PO_Properties.getSPANISH());
+
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'offer-menu')]/a");
+        elements.get(0).click();
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/list')]");
+        // Se pincha en ver ofertas y se comprueba que se accede
+        elements.get(0).click();
+        PO_OffersView.checkOffersPage(driver, PO_Properties.getSPANISH());
+
+        // Se hace una búsqueda con el texto en blanco
+        PO_OffersView.searchOffers(driver, "");
+
+        // Se comprueba que aparece el texto de la página de búsqueda de ofertas y que salen 5 ofertas
+        PO_OffersView.checkOffersPage(driver, PO_Properties.getSPANISH());
+        
+        List<WebElement> offerList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
+                PO_View.getTimeout());
+        Assertions.assertEquals(5, offerList.size());
+        
+        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+    }
+
+    /*
+        Hacer una búsqueda escribiendo en el campo un texto que no exista y comprobar que se
+        muestra la página que corresponde, con la lista de ofertas vacía.
+     */
+    @Test
+    @Order(21)
+    public void PR21() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+
+        // Si se loguea como usuario estándar correctamente, se accede a la vista de las ofertas propias
+        PO_UserOffersView.checkUserOffersPage(driver, PO_Properties.getSPANISH());
+
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'offer-menu')]/a");
+        elements.get(0).click();
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/list')]");
+        // Se pincha en ver ofertas y se comprueba que se accede
+        elements.get(0).click();
+        PO_OffersView.checkOffersPage(driver, PO_Properties.getSPANISH());
+
+        // Se hace una búsqueda con el texto en blanco
+        PO_OffersView.searchOffers(driver, "Oferta inexistente");
+
+        // Se comprueba que aparece el texto de la página de búsqueda de ofertas y el de que no hay ofertas
+        PO_OffersView.checkOffersPage(driver, PO_Properties.getSPANISH());
+
+        PO_UserOffersView.checkElementByKey(driver, "offer.empty",
+                PO_Properties.getSPANISH());
+
+        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+    }
 
     // ---------------- Tests apartado 10 ---------------
 

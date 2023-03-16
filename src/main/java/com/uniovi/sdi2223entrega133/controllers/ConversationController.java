@@ -100,6 +100,9 @@ public class ConversationController {
             }
         }
         if (result.hasErrors()) {
+            User user = usersService.getUserByEmail(principal.getName());
+
+            model.addAttribute("activeUser", user);
             conversationService.addConversation(conversation);
             model.addAttribute("conversation", conversation);
             model.addAttribute("message", message);
