@@ -180,6 +180,7 @@ class Sdi2223Entrega133ApplicationTests {
         PO_View.checkElementBy(driver, "text", "100.0€");
         // Compramos la oferta
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(text(), 'Comprar')]");
+        elements.get(0).click();
         // Comprobamos que el saldo se ha reducido
         PO_View.checkElementBy(driver, "text", "80.0€");
     }
