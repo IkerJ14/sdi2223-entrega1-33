@@ -74,7 +74,7 @@ public class UserController {
         Log log2 = new Log("ALTA", new Date(), "UserController: POST: signup");
         logService.addLog(log2);
         logger.info("Se realizo peticion post /signup");
-        return "redirect:home";
+        return "redirect:/offer/user_list";
     }
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {

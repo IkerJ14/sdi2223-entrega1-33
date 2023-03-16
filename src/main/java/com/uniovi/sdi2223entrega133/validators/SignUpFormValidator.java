@@ -18,6 +18,8 @@ public class SignUpFormValidator implements Validator {
     public void validate(Object target, Errors errors) {
         User user = (User) target;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "Error.empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "Error.empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "Error.empty");
 
         if (userService.getUserByEmail(user.getEmail()) != null) {
             errors.rejectValue("email", "Error.signup.email.duplicate");}

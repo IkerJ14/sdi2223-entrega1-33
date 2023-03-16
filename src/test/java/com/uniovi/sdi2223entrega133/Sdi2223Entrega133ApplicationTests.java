@@ -16,7 +16,7 @@ class Sdi2223Entrega133ApplicationTests {
 
     static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
     //static String Geckodriver = "C:\\Path\\geckodriver-v0.30.0-win64.exe";
-    static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
+    static String Geckodriver = "C:\\Lab\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
     //static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox-bin";
     //static String Geckodriver = "/Users/USUARIO/selenium/geckodriver-v0.30.0-macos";
     //Común a Windows y a MACOSX
@@ -54,6 +54,28 @@ class Sdi2223Entrega133ApplicationTests {
     }
 
     // ---------------- Tests apartado 1 ----------------
+    @Test
+    @Order(1)
+    public void PR01() {
+        //Vamos al formulario de registro
+        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+        //Rellenamos el formulario.
+        PO_Signup.fillForm(driver, "user16@email.com", "Frodo", "Bolson", "user16", "user16");
+        //Comprobamos que entramos en la sección privada y nos nuestra el texto a buscar
+        PO_UserOffersView.checkUserOffersPage(driver, PO_Properties.getSPANISH());
+    }
+
+    @Test
+    @Order(2)
+    public void PR02() {
+        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+        PO_Signup.fillForm(driver, "", "", "", "17777", "17777");
+        List<WebElement> result = PO_Signup.checkElementByKey(driver, "Error.empty",
+                PO_Properties.getSPANISH() );
+        String checkText = PO_HomeView.getP().getString("Error.empty",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+    }
 
     // ---------------- Tests apartado 2 ----------------
 
