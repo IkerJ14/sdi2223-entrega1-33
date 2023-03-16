@@ -56,6 +56,7 @@
                 <div th:unless="${offer.sold}">
                     <a th:id="${'sellButton' + offer.id}" th:text="#{offer.sell}"
                        th:href="${'/offer/'+offer.id+'/nosold'}">comprar</a>
+                    <!--
                     <script th:inline="javascript">
                         /*<![CDATA[*/
                         $("#sellButton"+ "[[${offer.id}]]").click(function() {
@@ -70,6 +71,7 @@
                         });
                         /*]]>*/
                     </script>
+                    -->
                 </div>
                 </td>
                 <td th:unless="${offer.user.email.equals(#authentication.getPrincipal().getUsername())}">
