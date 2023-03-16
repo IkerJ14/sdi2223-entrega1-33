@@ -111,10 +111,6 @@ class Sdi2223Entrega133ApplicationTests {
         // Se comprueba que la nueva oferta aparece en la página
         elements = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, elements.get(0).getText());
-
-        // TODO: Delete offer after checking
-
-        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
 
     /*
@@ -144,8 +140,6 @@ class Sdi2223Entrega133ApplicationTests {
         String checkText = PO_HomeView.getP().getString("Error.offer.price.negative",
                 PO_Properties.getSPANISH());
         Assertions.assertEquals(checkText, result.get(0).getText());
-
-        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
 
     // ---------------- Tests apartado 7 ----------------
@@ -167,11 +161,57 @@ class Sdi2223Entrega133ApplicationTests {
         List<WebElement> offerList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
         Assertions.assertEquals(10, offerList.size());
-
-        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
 
     // ---------------- Tests apartado 8 ----------------
+
+    /*
+        Ir a la lista de ofertas, borrar la primera oferta de la lista, comprobar que la lista se actualiza y
+        que la oferta desaparece.
+     */
+    @Test
+    @Order(18)
+    public void PR18() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "user09@email.com", "user09");
+
+        // Se obtiene el título de la primera oferta
+        List<WebElement> elements = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
+                PO_View.getTimeout());
+        String checkText = elements.get(0).getText().split(" ")[0];
+
+        // Se da de baja la primera oferta
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(text(), 'Dar de baja')]");
+        elements.get(0).click();
+
+        // Se comprueba que ya no aparezca
+        SeleniumUtils.waitTextIsNotPresentOnPage(driver, checkText, PO_View.getTimeout());
+    }
+
+    /*
+        Ir a la lista de ofertas, borrar la última oferta de la lista, comprobar que la lista se actualiza y
+        que la oferta desaparece.
+     */
+    @Test
+    @Order(19)
+    public void PR19() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "user09@email.com", "user09");
+
+        // Se obtiene el título de la primera oferta
+        List<WebElement> elements = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
+                PO_View.getTimeout());
+
+        int lastPos = elements.size() - 1;
+        String checkText = elements.get(lastPos).getText().split(" ")[0];
+
+        // Se da de baja la primera oferta
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(text(), 'Dar de baja')]");
+        elements.get(lastPos).click();
+
+        // Se comprueba que ya no aparezca
+        SeleniumUtils.waitTextIsNotPresentOnPage(driver, checkText, PO_View.getTimeout());
+    }
 
     // ---------------- Tests apartado 9 ----------------
 
@@ -204,8 +244,6 @@ class Sdi2223Entrega133ApplicationTests {
         List<WebElement> offerList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
         Assertions.assertEquals(5, offerList.size());
-        
-        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
 
     /*
@@ -231,13 +269,11 @@ class Sdi2223Entrega133ApplicationTests {
         // Se hace una búsqueda con el texto en blanco
         PO_OffersView.searchOffers(driver, "Oferta inexistente");
 
-        // Se comprueba que aparece el texto de la página de búsqueda de ofertas y el de que no hay ofertas
+        // Se comprueba que aparece el texto de la página de búsqueda de ofertas y el mensaje de que no hay ofertas
         PO_OffersView.checkOffersPage(driver, PO_Properties.getSPANISH());
 
         PO_UserOffersView.checkElementByKey(driver, "offer.empty",
                 PO_Properties.getSPANISH());
-
-        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
 
     // ---------------- Tests apartado 10 ---------------
@@ -393,6 +429,11 @@ class Sdi2223Entrega133ApplicationTests {
 
     // ---------------- Tests apartado 12 ---------------
 
+    /*
+         Sobre una búsqueda determinada de ofertas (a elección de desarrollador), enviar un mensaje
+        a una oferta concreta. Se abriría dicha conversación por primera vez. Comprobar que el mensaje aparece
+        en la conversación.
+     */
     @Test
     @Order(26)
     public void PR26() {
@@ -418,10 +459,12 @@ class Sdi2223Entrega133ApplicationTests {
         PO_ConversationView.fillMessageAddForm(driver, "Hola");
         // Comprobamos que aparece el mensaje
         PO_View.checkElementBy(driver, "text", "Hola");
-        //Hacemos logout
-        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
 
+    /*
+        Enviar un mensaje a una conversación ya existente accediendo desde el botón/enlace
+        “Conversación”. Comprobar que el mensaje aparece en la conversación.
+     */
     @Test
     @Order(27)
     public void PR27() {
@@ -449,12 +492,14 @@ class Sdi2223Entrega133ApplicationTests {
         PO_ConversationView.fillMessageAddForm(driver, "Buenas");
         // Comprobamos que aparece el mensaje anterior
         PO_View.checkElementBy(driver, "text", "Buenas");
-        //Hacemos logout
-        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
 
     // ---------------- Tests apartado 13 ---------------
 
+    /*
+        Mostrar el listado de conversaciones ya abiertas. Comprobar que el listado contiene la
+        cantidad correcta de conversaciones.
+     */
     @Test
     @Order(28)
     public void PR28() {
@@ -477,8 +522,6 @@ class Sdi2223Entrega133ApplicationTests {
         PO_ConversationView.fillMessageAddForm(driver, "Adios");
         // Comprobamos que aparece el mensaje anterior
         PO_View.checkElementBy(driver, "text", "Adios");
-        //Hacemos logout
-        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
 
     // ---------------- Tests apartado 14 ---------------
