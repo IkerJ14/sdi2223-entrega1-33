@@ -2,7 +2,6 @@ package com.uniovi.sdi2223entrega133.entities;
 
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 public class ConversationMessage {
