@@ -564,8 +564,8 @@ class Sdi2223Entrega133ApplicationTests {
         Assertions.assertEquals("There was an unexpected error (type=Forbidden, status=403).", markList.get(1).getText());
     }
     @Test
-    @Order(33)
-    public void PR33() {
+    @Order(34)
+    public void PR34() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
 
@@ -583,8 +583,8 @@ class Sdi2223Entrega133ApplicationTests {
     }
 
     @Test
-    @Order(34)
-    public void PR34() {
+    @Order(33)
+    public void PR33() {
         PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
         PO_Signup.fillForm(driver, "Iker@email.com", "Iker", "Jimenez", "123456", "123456");
         PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
