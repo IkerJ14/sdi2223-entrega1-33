@@ -1,7 +1,6 @@
 package com.uniovi.sdi2223entrega133;
 
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,11 +16,10 @@ class Sdi2223Entrega133ApplicationTests {
 
     static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
     //static String Geckodriver = "C:\\Path\\geckodriver-v0.30.0-win64.exe";
-    static String Geckodriver = "C:\\Users\\ikerj\\Desktop\\PL-SDI-Sesion5-material\\geckodriver-v0.30.0-win64.exe";
+    static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
     //static String Geckodriver = "C:\\Lab\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
     //static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox-bin";
     //static String Geckodriver = "/Users/USUARIO/selenium/geckodriver-v0.30.0-macos";
-    // Común a Windows y a MACOSX
     //Común a Windows y a MACOSX
     static WebDriver driver = getDriver(PathFirefox, Geckodriver);
     static String URL = "http://localhost:8080";
@@ -299,11 +297,7 @@ class Sdi2223Entrega133ApplicationTests {
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/list')]");
         elements.get(0).click();
         // Buscamos ofertas por 'Albornoz' (cuesta 20€)
-        WebElement buscador = driver.findElement(By.name("searchText"));
-        buscador.click();
-        buscador.clear();
-        buscador.sendKeys("Albornoz");
-        driver.findElement(By.className("btn")).click();
+        PO_OffersView.searchOffers(driver, "Albornoz");
         // Comprobamos que el usuario tiene 100€
         PO_View.checkElementBy(driver, "text", "100.0€");
         // Compramos la oferta
@@ -331,11 +325,7 @@ class Sdi2223Entrega133ApplicationTests {
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/list')]");
         elements.get(0).click();
         // Buscamos ofertas por 'Mesita' (cuesta 100€)
-        WebElement buscador = driver.findElement(By.name("searchText"));
-        buscador.click();
-        buscador.clear();
-        buscador.sendKeys("Mesita");
-        driver.findElement(By.className("btn")).click();
+        PO_OffersView.searchOffers(driver, "Mesita");
         // Comprobamos que el usuario tiene 100€
         PO_View.checkElementBy(driver, "text", "100.0€");
         // Compramos la oferta
@@ -363,11 +353,7 @@ class Sdi2223Entrega133ApplicationTests {
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/list')]");
         elements.get(0).click();
         // Buscamos ofertas por 'Mesa' (cuesta 120€)
-        WebElement buscador = driver.findElement(By.name("searchText"));
-        buscador.click();
-        buscador.clear();
-        buscador.sendKeys("Mesa");
-        driver.findElement(By.className("btn")).click();
+        PO_OffersView.searchOffers(driver, "Mesa");
         // Comprobamos que el usuario tiene 100€
         PO_View.checkElementBy(driver, "text", "100.0€");
         // Intentamos comprar la oferta
@@ -396,20 +382,12 @@ class Sdi2223Entrega133ApplicationTests {
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/list')]");
         elements.get(0).click();
         // Primero buscamos ofertas por 'Cortacesped' (no podemos comprarla)
-        WebElement buscador = driver.findElement(By.name("searchText"));
-        buscador.click();
-        buscador.clear();
-        buscador.sendKeys("Cortacesped");
-        driver.findElement(By.className("btn")).click();
+        PO_OffersView.searchOffers(driver, "Cortacesped");
         // Intentamos comprar la oferta
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(text(), 'Comprar')]");
         elements.get(0).click();
         // Ahora buscamos por 'pescar' (podemos comprarla)
-        buscador = driver.findElement(By.name("searchText"));
-        buscador.click();
-        buscador.clear();
-        buscador.sendKeys("pescar");
-        driver.findElement(By.className("btn")).click();
+        PO_OffersView.searchOffers(driver, "pescar");
         // Compramos la oferta
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(text(), 'Comprar')]");
         elements.get(0).click();
@@ -417,11 +395,7 @@ class Sdi2223Entrega133ApplicationTests {
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(text(), 'Volver al catálogo')]");
         elements.get(0).click();
         // Buscamos por 'libro' (también podemos comprarla)
-        buscador = driver.findElement(By.name("searchText"));
-        buscador.click();
-        buscador.clear();
-        buscador.sendKeys("libro");
-        driver.findElement(By.className("btn")).click();
+        PO_OffersView.searchOffers(driver, "libro");
         // Compramos la oferta
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(text(), 'Comprar')]");
         elements.get(0).click();
@@ -450,11 +424,7 @@ class Sdi2223Entrega133ApplicationTests {
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/list')]");
         elements.get(0).click();
         // Ahora buscamos por 'pescar' (podemos conversar)
-        WebElement buscador = driver.findElement(By.name("searchText"));
-        buscador.click();
-        buscador.clear();
-        buscador.sendKeys("pescar");
-        driver.findElement(By.className("btn")).click();
+        PO_OffersView.searchOffers(driver, "pescar");
         //Accedemos a la conversación
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(text(), 'Conversación')]");
         elements.get(0).click();
@@ -481,11 +451,7 @@ class Sdi2223Entrega133ApplicationTests {
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/list')]");
         elements.get(0).click();
         // Ahora buscamos por 'pescar' (podemos conversar)
-        WebElement buscador = driver.findElement(By.name("searchText"));
-        buscador.click();
-        buscador.clear();
-        buscador.sendKeys("pescar");
-        driver.findElement(By.className("btn")).click();
+        PO_OffersView.searchOffers(driver, "pescar");
         //Accedemos a la conversación
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(text(), 'Conversación')]");
         elements.get(0).click();
@@ -528,18 +494,265 @@ class Sdi2223Entrega133ApplicationTests {
     }
 
     // ---------------- Tests apartado 14 ---------------
-
-    // ---------------- Tests apartado 15 ---------------
+    /*
+        Visualizar al menos cuatro páginas en español/inglés/español (comprobando que algunas de
+        las etiquetas cambian al idioma correspondiente). Ejemplo, Página principal/Opciones Principales de
+        Usuario/Listado de Usuarios.
+     */
     @Test
-    @Order(30)
-    public void PR30() {
-        driver.navigate().to("http://localhost:8080/user/list");
+    @Order(29)
+    public void PR29() {
+        // Se comprueban los textos del formulario de registro
+        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+        // Se comprueban en español
+        List<WebElement> result = PO_UserOffersView.checkElementByKey(driver, "signup.header",
+                PO_Properties.getSPANISH());
+        String checkText = PO_HomeView.getP().getString("signup.header",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
 
-        List<WebElement> markList = SeleniumUtils.waitLoadElementsBy(driver, "free", "/html/body/div/h2",
-                PO_View.getTimeout());
+        result = PO_UserOffersView.checkElementByKey(driver, "signup.lastname",
+                PO_Properties.getSPANISH());
+        checkText = PO_HomeView.getP().getString("signup.lastname",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
 
-        Assertions.assertEquals("Introduce tus datos", markList.get(0).getText());
+        result = PO_UserOffersView.checkElementByKey(driver, "signup.name",
+                PO_Properties.getSPANISH());
+        checkText = PO_HomeView.getP().getString("signup.name",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        // Se cambia el idioma al inglés y se vuelven a comprobar
+        PO_NavView.changeLanguage(driver, "btnEnglish");
+
+        result = PO_UserOffersView.checkElementByKey(driver, "signup.message",
+                PO_Properties.getENGLISH());
+        checkText = PO_HomeView.getP().getString("signup.message",
+                PO_Properties.getENGLISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "signup.header",
+                PO_Properties.getENGLISH());
+        checkText = PO_HomeView.getP().getString("signup.header",
+                PO_Properties.getENGLISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "signup.name",
+                PO_Properties.getENGLISH());
+        checkText = PO_HomeView.getP().getString("signup.name",
+                PO_Properties.getENGLISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        // Se cambia el idioma al español y se vuelven a comprobar
+        PO_NavView.changeLanguage(driver, "btnSpanish");
+
+        result = PO_UserOffersView.checkElementByKey(driver, "signup.message",
+                PO_Properties.getSPANISH());
+        checkText = PO_HomeView.getP().getString("signup.message",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "signup.header",
+                PO_Properties.getSPANISH());
+        checkText = PO_HomeView.getP().getString("signup.header",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "signup.name",
+                PO_Properties.getSPANISH());
+        checkText = PO_HomeView.getP().getString("signup.name",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        // Se comprueban los textos del formulario de login
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        // Se comprueban en español
+//        result = PO_UserOffersView.checkElementByKey(driver, "login.message",
+//                PO_Properties.getSPANISH());
+//        checkText = PO_HomeView.getP().getString("login.message",
+//                PO_Properties.getSPANISH());
+//        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "login.header",
+                PO_Properties.getSPANISH());
+        checkText = PO_HomeView.getP().getString("login.header",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "login.mail",
+                PO_Properties.getSPANISH());
+        checkText = PO_HomeView.getP().getString("login.mail",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        // FIXME: Comprobar contraseña en vez de titulo
+
+        // Se cambia el idioma al inglés y se vuelven a comprobar
+        PO_NavView.changeLanguage(driver, "btnEnglish");
+
+//        result = PO_UserOffersView.checkElementByKey(driver, "login.message",
+//                PO_Properties.getENGLISH());
+//        checkText = PO_HomeView.getP().getString("login.message",
+//                PO_Properties.getENGLISH());
+//        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "login.header",
+                PO_Properties.getENGLISH());
+        checkText = PO_HomeView.getP().getString("login.header",
+                PO_Properties.getENGLISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "login.mail",
+                PO_Properties.getENGLISH());
+        checkText = PO_HomeView.getP().getString("login.mail",
+                PO_Properties.getENGLISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        // Se cambia el idioma al español y se vuelven a comprobar
+        PO_NavView.changeLanguage(driver, "btnSpanish");
+
+//        result = PO_UserOffersView.checkElementByKey(driver, "login.message",
+//                PO_Properties.getSPANISH());
+//        checkText = PO_HomeView.getP().getString("login.message",
+//                PO_Properties.getSPANISH());
+//        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "login.header",
+                PO_Properties.getSPANISH());
+        checkText = PO_HomeView.getP().getString("login.header",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "login.mail",
+                PO_Properties.getSPANISH());
+        checkText = PO_HomeView.getP().getString("login.mail",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+
+        // Se comprueba la vista de ofertas propias
+        result = PO_UserOffersView.checkElementByKey(driver, "offer.user-title",
+                PO_Properties.getSPANISH());
+        checkText = PO_HomeView.getP().getString("offer.user-title",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "offer.user-description",
+                PO_Properties.getSPANISH());
+        checkText = PO_HomeView.getP().getString("offer.user-description",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "offer.detail",
+                PO_Properties.getSPANISH());
+        checkText = PO_HomeView.getP().getString("offer.detail",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        PO_NavView.changeLanguage(driver, "btnEnglish");
+        result = PO_UserOffersView.checkElementByKey(driver, "offer.user-title",
+                PO_Properties.getENGLISH());
+        checkText = PO_HomeView.getP().getString("offer.user-title",
+                PO_Properties.getENGLISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "offer.user-description",
+                PO_Properties.getENGLISH());
+        checkText = PO_HomeView.getP().getString("offer.user-description",
+                PO_Properties.getENGLISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "offer.detail",
+                PO_Properties.getENGLISH());
+        checkText = PO_HomeView.getP().getString("offer.detail",
+                PO_Properties.getENGLISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        PO_NavView.changeLanguage(driver, "btnSpanish");
+        result = PO_UserOffersView.checkElementByKey(driver, "offer.user-title",
+                PO_Properties.getSPANISH());
+        checkText = PO_HomeView.getP().getString("offer.user-title",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "offer.user-description",
+                PO_Properties.getSPANISH());
+        checkText = PO_HomeView.getP().getString("offer.user-description",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "offer.detail",
+                PO_Properties.getSPANISH());
+        checkText = PO_HomeView.getP().getString("offer.detail",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'offer-menu')]/a");
+        elements.get(0).click();
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/list')]");
+        elements.get(0).click();
+
+        // Se comprueba la vista de todas las ofertas
+
+        result = PO_UserOffersView.checkElementByKey(driver, "offer.list-title",
+                PO_Properties.getSPANISH());
+        checkText = PO_HomeView.getP().getString("offer.list-title",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "offer.list-description",
+                PO_Properties.getSPANISH());
+        checkText = PO_HomeView.getP().getString("offer.list-description",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "offer.sell",
+                PO_Properties.getSPANISH());
+        checkText = PO_HomeView.getP().getString("offer.sell",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        PO_NavView.changeLanguage(driver, "btnEnglish");
+        result = PO_UserOffersView.checkElementByKey(driver, "offer.list-title",
+                PO_Properties.getENGLISH());
+        checkText = PO_HomeView.getP().getString("offer.list-title",
+                PO_Properties.getENGLISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "offer.list-description",
+                PO_Properties.getENGLISH());
+        checkText = PO_HomeView.getP().getString("offer.list-description",
+                PO_Properties.getENGLISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "offer.sell",
+                PO_Properties.getENGLISH());
+        checkText = PO_HomeView.getP().getString("offer.sell",
+                PO_Properties.getENGLISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        PO_NavView.changeLanguage(driver, "btnSpanish");
+        result = PO_UserOffersView.checkElementByKey(driver, "offer.list-title",
+                PO_Properties.getSPANISH());
+        checkText = PO_HomeView.getP().getString("offer.list-title",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "offer.list-description",
+                PO_Properties.getSPANISH());
+        checkText = PO_HomeView.getP().getString("offer.list-description",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        result = PO_UserOffersView.checkElementByKey(driver, "offer.sell",
+                PO_Properties.getSPANISH());
+        checkText = PO_HomeView.getP().getString("offer.sell",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
     }
+
     @Test
     @Order(31)
     public void PR31() {
@@ -608,4 +821,6 @@ class Sdi2223Entrega133ApplicationTests {
         Assertions.assertTrue( markList.get(0).findElements(By.xpath("//*[@id=\"tableLogs\"]/table/tbody/tr")).get(6).getText().contains("ALTA"));
         Assertions.assertTrue( markList.get(0).findElements(By.xpath("//*[@id=\"tableLogs\"]/table/tbody/tr")).get(6).getText().contains("Iker@email.com"));
     }
+    // ---------------- Tests apartado 15 ---------------
+
 }
