@@ -71,7 +71,7 @@ public class UserController {
         securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
         Log log = new Log("PET", new Date(), "UserController: POST: signup");
         logService.addLog(log);
-        Log log2 = new Log("ALTA", new Date(), "UserController: POST: signup");
+        Log log2 = new Log("ALTA", new Date(), "UserController: POST: signup( "+user.getEmail()+ ", " + user.getName() + ", " + user.getLastName() + ", " + user.getPassword() + ", " + user.getPasswordConfirm() +" )");
         logService.addLog(log2);
         logger.info("Se realizo peticion post /signup");
         return "redirect:/offer/user_list";

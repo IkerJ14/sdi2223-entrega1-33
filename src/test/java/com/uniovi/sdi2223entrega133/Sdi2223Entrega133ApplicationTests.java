@@ -530,7 +530,39 @@ class Sdi2223Entrega133ApplicationTests {
     // ---------------- Tests apartado 14 ---------------
 
     // ---------------- Tests apartado 15 ---------------
+    @Test
+    @Order(30)
+    public void PR30() {
+        driver.navigate().to("http://localhost:8080/user/list");
 
+        List<WebElement> markList = SeleniumUtils.waitLoadElementsBy(driver, "free", "/html/body/div/h2",
+                PO_View.getTimeout());
+
+        Assertions.assertEquals("Introduce tus datos", markList.get(0).getText());
+    }
+    @Test
+    @Order(31)
+    public void PR31() {
+        driver.navigate().to("http://localhost:8080/conversation/list");
+
+        List<WebElement> markList = SeleniumUtils.waitLoadElementsBy(driver, "free", "/html/body/div/h2",
+                PO_View.getTimeout());
+
+        Assertions.assertEquals("Introduce tus datos", markList.get(0).getText());
+    }
+    @Test
+    @Order(32)
+    public void PR32() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "user05@email.com", "user05");
+
+        driver.navigate().to("http://localhost:8080/log/list");
+
+        List<WebElement> markList = SeleniumUtils.waitLoadElementsBy(driver, "free", "/html/body/div",
+                PO_View.getTimeout());
+
+        Assertions.assertEquals("There was an unexpected error (type=Forbidden, status=403).", markList.get(1).getText());
+    }
     @Test
     @Order(33)
     public void PR33() {
@@ -553,6 +585,10 @@ class Sdi2223Entrega133ApplicationTests {
     @Test
     @Order(34)
     public void PR34() {
+        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+        PO_Signup.fillForm(driver, "Iker@email.com", "Iker", "Jimenez", "123456", "123456");
+        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "adn@email.com", "admin");
 
@@ -565,9 +601,11 @@ class Sdi2223Entrega133ApplicationTests {
 
         List<WebElement> markList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        System.out.println(markList.get(0).findElements(By.xpath("//*[@id=\"tableLogs\"]/table/tbody/tr")).get(3).getText());
+
         Assertions.assertTrue( markList.get(0).findElements(By.xpath("//*[@id=\"tableLogs\"]/table/tbody/tr")).get(1).getText().contains("GET"));
         Assertions.assertTrue( markList.get(0).findElements(By.xpath("//*[@id=\"tableLogs\"]/table/tbody/tr")).get(2).getText().contains("LOGIN-EX El usuario admin@email.com"));
         Assertions.assertTrue( markList.get(0).findElements(By.xpath("//*[@id=\"tableLogs\"]/table/tbody/tr")).get(3).getText().contains("LOGIN_ERR"));
+        Assertions.assertTrue( markList.get(0).findElements(By.xpath("//*[@id=\"tableLogs\"]/table/tbody/tr")).get(6).getText().contains("ALTA"));
+        Assertions.assertTrue( markList.get(0).findElements(By.xpath("//*[@id=\"tableLogs\"]/table/tbody/tr")).get(6).getText().contains("Iker@email.com"));
     }
 }
