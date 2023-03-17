@@ -13,18 +13,18 @@
         <li class="nav-item ">
           <a class="nav-link" href="/home">Home<span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item dropdown active" sec:authorize="hasRole('ROLE_ESTANDAR')">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+        <li class="nav-item dropdown active" id="offer-menu" sec:authorize="hasRole('ROLE_ESTANDAR')">
+          <a class="nav-link dropdown-toggle" href="#" id="offerDropdown" role="button" data-toggle="dropdown"
              aria-haspopup="true" aria-expanded="false" th:text="#{offer.management}">
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <div class="dropdown-menu" aria-labelledby="offerDropdown">
             <a class="dropdown-item" href="/offer/list" th:text="#{offer.list}"></a>
             <a class="dropdown-item" href="/offer/user_list" th:text="#{offer.self-offers}"></a>
             <a class="dropdown-item" href="/offer/add" th:text="#{offer.add}"></a>
             <a class="dropdown-item" href="/offer/purchaseList" th:text="#{purchase.list-title}"></a>
           </div>
         </li>
-        <li class="nav-item dropdown active" sec:authorize="hasRole('ROLE_ESTANDAR')">
+        <li class="nav-item dropdown active" id="conversation-menu" sec:authorize="hasRole('ROLE_ESTANDAR')">
           <a class="nav-link dropdown-toggle" href="#" id="conversationDropdown" role="button" data-toggle="dropdown"
              aria-haspopup="true" aria-expanded="false" th:text="#{conversation.management}">
           </a>
@@ -32,7 +32,7 @@
             <a class="dropdown-item" href="/conversation/list" th:text="#{conversation.list}"></a>
           </div>
         </li>
-        <li class="nav-item dropdown active" sec:authorize="hasRole('ROLE_ADMIN')" >
+        <li class="nav-item dropdown active" id="user-menu" sec:authorize="hasRole('ROLE_ADMIN')" >
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
              aria-haspopup="true" aria-expanded="false" th:text="#{user.management}">
           </a>
@@ -40,7 +40,7 @@
             <a class="dropdown-item" href="/user/list" th:text="#{user.list}"></a>
           </div>
         </li>
-        <li class="nav-item dropdown active" sec:authorize="hasRole('ROLE_ADMIN')" >
+        <li class="nav-item dropdown active" id="log-menu" sec:authorize="hasRole('ROLE_ADMIN')" >
           <a class="nav-link dropdown-toggle" href="#" id="logDropdown" role="button" data-toggle="dropdown"
              aria-haspopup="true" aria-expanded="false" th:text="#{log.management}">
           </a>
@@ -52,6 +52,9 @@
     </div>
     <div class="justify-content-end">
       <ul class="navbar-nav">
+        <li class="nav-item dropdown active" id="user-details" sec:authorize="hasRole('ROLE_ESTANDAR')">
+          <p ><span th:text="${activeUser.email + ' ' + activeUser.cartera + '€'}"></span></p>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="btnLanguage" role="button" data-toggle="dropdown"
              aria-haspopup="true" aria-expanded="false">

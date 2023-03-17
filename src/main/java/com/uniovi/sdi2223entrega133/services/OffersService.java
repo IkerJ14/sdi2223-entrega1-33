@@ -50,13 +50,13 @@ public class OffersService {
         return offersRepository.findById(id);
     }
 
-    public int buyOffer(Offer offer, User user) {
+    public String buyOffer(Offer offer, User user) {
         if (offer.getUser().getEmail().equals(user.getEmail())) {
-            return 1;
+            return "error_owner";
         } else if (offer.getPrice() > user.getCartera()) {
-            return 2;
+            return "error_price";
         } else if (offer.isSold()) {
-            return 3;
+            return "error_sold";
         } else {
             offer.setSold(true);
             offer.setBuyer(user);
@@ -65,6 +65,6 @@ public class OffersService {
             usersRepository.save(user);
             offersRepository.save(offer);
         }
-        return 0;
+        return "";
     }
 }

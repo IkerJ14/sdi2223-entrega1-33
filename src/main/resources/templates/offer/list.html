@@ -10,7 +10,7 @@
             <input name="searchText" type="text" class="form-control" size="50"
                    th:placeholder="#{offer.search}">
         </div>
-        <button type="submit" class="btn btn-primary" th:text="#{form.submit}"></button>
+        <button type="submit" id="searchButton" class="btn btn-primary" th:text="#{form.submit}"></button>
     </form>
     <p th:text="#{offer.list-description}"></p>
     <div>
@@ -54,12 +54,9 @@
                 <td th:if="${offer.sold}" th:text="#{offer.sold}"></td>
                 <td>
                 <div th:unless="${offer.sold}">
-                    <!--
-                    <button type="button" th:id="${'sellButton' + offer.id}"
-                            class="btn btn-success" th:text="#{offer.sell}"></button>
-                    -->
                     <a th:id="${'sellButton' + offer.id}" th:text="#{offer.sell}"
                        th:href="${'/offer/'+offer.id+'/nosold'}">comprar</a>
+                    <!--
                     <script th:inline="javascript">
                         /*<![CDATA[*/
                         $("#sellButton"+ "[[${offer.id}]]").click(function() {
@@ -74,6 +71,7 @@
                         });
                         /*]]>*/
                     </script>
+                    -->
                 </div>
                 </td>
                 <td th:unless="${offer.user.email.equals(#authentication.getPrincipal().getUsername())}">

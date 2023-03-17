@@ -15,6 +15,7 @@ import com.uniovi.sdi2223entrega133.validators.SignUpFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.security.Principal;
 import java.util.*;
 import com.uniovi.sdi2223entrega133.services.RolesService;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,7 +38,10 @@ public class UserController {
     @Autowired
     private LogsService logService;
     @RequestMapping(value = {"/home"}, method = RequestMethod.GET)
-    public String home(Model model) {
+    public String home(Model model, Principal principal) {
+        User user = userService.getUserByEmail(principal.getName());
+        model.addAttribute("activeUser", user);
+
         Log log = new Log("PET", new Date(), "UserController: GET: home");
         logService.addLog(log);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -70,7 +74,7 @@ public class UserController {
         Log log2 = new Log("ALTA", new Date(), "UserController: POST: signup");
         logService.addLog(log2);
         logger.info("Se realizo peticion post /signup");
-        return "redirect:home";
+        return "redirect:/offer/user_list";
     }
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {

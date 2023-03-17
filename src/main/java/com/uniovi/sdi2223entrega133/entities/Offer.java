@@ -40,6 +40,7 @@ public class Offer {
         this.date = date;
         this.price = price;
         this.user = user;
+        this.sold = false;
     }
 
     public Long getId() {

@@ -31,6 +31,7 @@
         </table>
     </div>
     <div th:if="${#lists.isEmpty(purchases)}" th:text="#{purchase.empty}"></div>
+    <a th:text="#{offer.list.return}" th:href="${'/offer/list'}">volver</a>
 </div>
 </body>
 </html>

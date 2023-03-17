@@ -49,7 +49,11 @@ public class ConversationController {
     @Autowired
     private LogsService logService;
     @RequestMapping("/conversation/{idOffer}/{emailBuyer}")
-    public String getConversation(@PathVariable Long idOffer, @PathVariable String emailBuyer, Model model) {
+    public String getConversation(@PathVariable Long idOffer, @PathVariable String emailBuyer, Model model,
+                                  Principal principal) {
+        User activeUser = usersService.getUserByEmail(principal.getName());
+        model.addAttribute("activeUser", activeUser);
+
         Offer offer = offersService.getOffer(idOffer).get();
 
         User buyer = usersService.getUserByEmail(emailBuyer);
@@ -71,7 +75,7 @@ public class ConversationController {
         logger.info("Se realizo peticion get /conversation/" + idOffer + "/" + emailBuyer);
         Log log2 = new Log("PET", new Date(), "ConversationController: GET: conversation/"+ idOffer + "/" + emailBuyer);
         logService.addLog(log2);
-        return "/conversation/offer_conversation";
+        return "conversation/offer_conversation";
     }
 
     @RequestMapping("/conversation/message")
@@ -96,10 +100,13 @@ public class ConversationController {
             }
         }
         if (result.hasErrors()) {
+            User user = usersService.getUserByEmail(principal.getName());
+
+            model.addAttribute("activeUser", user);
             conversationService.addConversation(conversation);
             model.addAttribute("conversation", conversation);
             model.addAttribute("message", message);
-            return "/conversation/offer_conversation";
+            return "conversation/offer_conversation";
         }
 
         String email = principal.getName();
@@ -116,13 +123,14 @@ public class ConversationController {
         conversationService.addMessageToConversation(conversation, message);
         conversationService.addConversation(conversation);
 
+        model.addAttribute("activeUser", currentUser);
         model.addAttribute("conversation", conversation);
         model.addAttribute("message", message);
 
         logger.info("Se realizo peticion get /conversation/message");
         Log log2 = new Log("PET", new Date(), "ConversationController: GET: conversation/message");
         logService.addLog(log2);
-        return "/conversation/offer_conversation";
+        return "conversation/offer_conversation";
     }
 
     @RequestMapping("/conversation/list")
@@ -135,10 +143,11 @@ public class ConversationController {
 
         model.addAttribute("listConversations", conversations.getContent());
         model.addAttribute("page", conversations);
+        model.addAttribute("activeUser", user);
 
         logger.info("Se realizo peticion get /conversation/list");
         Log log2 = new Log("PET", new Date(), "ConversationController: GET: conversation/list");
         logService.addLog(log2);
-        return "/conversation/list";
+        return "conversation/list";
     }
 }
