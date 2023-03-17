@@ -25,8 +25,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="log : ${listLogs}">
-                <td th:text="${log.getDate()}"> </td>
+            <tr th:classname="filaLog" th:each="log : ${listLogs}">
+                <td classname="colLog" th:text="${log.getDate()}"> </td>
                 <td th:text="${log.getLogType()}"> </td>
                 <td th:text="${log.getText()}"> </td>
             </tr>

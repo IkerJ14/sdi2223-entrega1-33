@@ -28,7 +28,7 @@ public class LogoutHandler implements LogoutSuccessHandler {
     private final RedirectStrategy redirectStrategy= new DefaultRedirectStrategy();
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        Log log2 = new Log("LOGOUT", new Date(), "Usuario:" + authentication.getName() + "se ha desconectado");
+        Log log2 = new Log("LOGOUT", new Date(), "Usuario: " + authentication.getName() + " se ha desconectado");
         logService.addLog(log2);
         redirectStrategy.sendRedirect(request, response, "/login");
     }
