@@ -18,7 +18,7 @@ class Sdi2223Entrega133ApplicationTests {
     static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
     //static String Geckodriver = "C:\\Path\\geckodriver-v0.30.0-win64.exe";
     static String Geckodriver = "C:\\Users\\ikerj\\Desktop\\PL-SDI-Sesion5-material\\geckodriver-v0.30.0-win64.exe";
-    static String Geckodriver = "C:\\Lab\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+    //static String Geckodriver = "C:\\Lab\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
     //static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox-bin";
     //static String Geckodriver = "/Users/USUARIO/selenium/geckodriver-v0.30.0-macos";
     // Común a Windows y a MACOSX
