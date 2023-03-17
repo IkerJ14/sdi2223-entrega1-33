@@ -753,6 +753,27 @@ class Sdi2223Entrega133ApplicationTests {
         Assertions.assertEquals(checkText , result.get(0).getText());
     }
 
+    // ---------------- Tests apartado 15 ---------------
+
+    /*
+        Intentar acceder sin estar autenticado a la opción de listado de usuarios. Se deberá volver al
+        formulario de login.
+     */
+    @Test
+    @Order(30)
+    public void PR30() {
+        driver.navigate().to("http://localhost:8080/user/list");
+
+        List<WebElement> markList = SeleniumUtils.waitLoadElementsBy(driver, "free", "/html/body/div/h2",
+                PO_View.getTimeout());
+
+        Assertions.assertEquals("Introduce tus datos", markList.get(0).getText());
+    }
+
+    /*
+        Intentar acceder sin estar autenticado a la opción de listado de conversaciones. Se deberá
+        volver al formulario de login.
+     */
     @Test
     @Order(31)
     public void PR31() {
@@ -763,6 +784,12 @@ class Sdi2223Entrega133ApplicationTests {
 
         Assertions.assertEquals("Introduce tus datos", markList.get(0).getText());
     }
+
+    /*
+        Estando autenticado como usuario estándar intentar acceder a una opción disponible solo
+        para usuarios administradores (Añadir menú de auditoria (visualizar logs)). Se deberá indicar un mensaje
+        de acción prohibida
+     */
     @Test
     @Order(32)
     public void PR32() {
@@ -776,25 +803,12 @@ class Sdi2223Entrega133ApplicationTests {
 
         Assertions.assertEquals("There was an unexpected error (type=Forbidden, status=403).", markList.get(1).getText());
     }
-    @Test
-    @Order(34)
-    public void PR34() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
 
-        // Si se loguea como usuario admin correctamente, se accede a la vista de los usuarios
-        PO_LogsView.clickLogOp(driver, "logDropdown", "id", "logDropdown");
-
-        PO_LogsView.clickLogOp(driver, "logListOp", "id", "logListOp");
-
-        PO_LogsView.clickLogOp(driver, "btn btn-danger", "class", "btn btn-danger");
-
-        List<WebElement> markList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody",
-                PO_View.getTimeout());
-
-        Assertions.assertEquals(0, markList.get(0).findElements(By.className("filaLog")).size());
-    }
-
+    /*
+         Estando autenticado como usuario administrador visualizar todos los logs generados en una
+        serie de interacciones. Esta prueba deberá generar al menos dos interacciones de cada tipo y comprobar
+        que el listado incluye los logs correspondientes.
+     */
     @Test
     @Order(33)
     public void PR33() {
@@ -821,6 +835,30 @@ class Sdi2223Entrega133ApplicationTests {
         Assertions.assertTrue( markList.get(0).findElements(By.xpath("//*[@id=\"tableLogs\"]/table/tbody/tr")).get(6).getText().contains("ALTA"));
         Assertions.assertTrue( markList.get(0).findElements(By.xpath("//*[@id=\"tableLogs\"]/table/tbody/tr")).get(6).getText().contains("Iker@email.com"));
     }
-    // ---------------- Tests apartado 15 ---------------
+
+    /*
+        Estando autenticado como usuario administrador, ir a visualización de logs, pulsar el
+        botón/enlace borrar logs y comprobar que se eliminan los logs de la base de datos
+     */
+    @Test
+    @Order(34)
+    public void PR34() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+
+        // Si se loguea como usuario admin correctamente, se accede a la vista de los usuarios
+        PO_LogsView.clickLogOp(driver, "logDropdown", "id", "logDropdown");
+
+        PO_LogsView.clickLogOp(driver, "logListOp", "id", "logListOp");
+
+        PO_LogsView.clickLogOp(driver, "btn btn-danger", "class", "btn btn-danger");
+
+        List<WebElement> markList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody",
+                PO_View.getTimeout());
+
+        Assertions.assertEquals(0, markList.get(0).findElements(By.className("filaLog")).size());
+    }
+
+
 
 }
