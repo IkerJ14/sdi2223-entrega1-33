@@ -74,8 +74,7 @@ public class UserController {
     }
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
-        Log log2 = new Log("LOGIN-EX", new Date(), "UserController: GET: login");
-        logService.addLog(log2);
+
         logger.info("Se realizo peticion get /login");
         return "login";
     }

@@ -1,8 +1,7 @@
 package com.uniovi.sdi2223entrega133;
 
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import pageobjects.*;
@@ -15,10 +14,10 @@ class Sdi2223Entrega133ApplicationTests {
 
     static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
     //static String Geckodriver = "C:\\Path\\geckodriver-v0.30.0-win64.exe";
-    static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
+    static String Geckodriver = "C:\\Users\\ikerj\\Desktop\\PL-SDI-Sesion5-material\\geckodriver-v0.30.0-win64.exe";
     //static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox-bin";
     //static String Geckodriver = "/Users/USUARIO/selenium/geckodriver-v0.30.0-macos";
-//Común a Windows y a MACOSX
+    // Común a Windows y a MACOSX
     static WebDriver driver = getDriver(PathFirefox, Geckodriver);
     static String URL = "http://localhost:8080";
 
@@ -67,4 +66,43 @@ class Sdi2223Entrega133ApplicationTests {
         Assertions.assertEquals(10, markList.size());
     }
 
+    @Test
+    @Order(33)
+    public void PR33() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+
+        // Si se loguea como usuario admin correctamente, se accede a la vista de los usuarios
+        PO_LogsView.clickLogOp(driver, "logDropdown", "id", "logDropdown");
+
+        PO_LogsView.clickLogOp(driver, "logListOp", "id", "logListOp");
+
+        PO_LogsView.clickLogOp(driver, "btn btn-danger", "class", "btn btn-danger");
+
+        List<WebElement> markList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody",
+                PO_View.getTimeout());
+
+        Assertions.assertEquals(0, markList.get(0).findElements(By.className("filaLog")).size());
+    }
+
+    @Test
+    @Order(34)
+    public void PR34() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "adn@email.com", "admin");
+
+        PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+
+        // Si se loguea como usuario admin correctamente, se accede a la vista de los usuarios
+        PO_LogsView.clickLogOp(driver, "logDropdown", "id", "logDropdown");
+
+        PO_LogsView.clickLogOp(driver, "logListOp", "id", "logListOp");
+
+        List<WebElement> markList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
+                PO_View.getTimeout());
+        System.out.println(markList.get(0).findElements(By.xpath("//*[@id=\"tableLogs\"]/table/tbody/tr")).get(3).getText());
+        Assertions.assertTrue( markList.get(0).findElements(By.xpath("//*[@id=\"tableLogs\"]/table/tbody/tr")).get(1).getText().contains("GET"));
+        Assertions.assertTrue( markList.get(0).findElements(By.xpath("//*[@id=\"tableLogs\"]/table/tbody/tr")).get(2).getText().contains("LOGIN-EX El usuario admin@email.com"));
+        Assertions.assertTrue( markList.get(0).findElements(By.xpath("//*[@id=\"tableLogs\"]/table/tbody/tr")).get(3).getText().contains("LOGIN_ERR"));
+    }
 }

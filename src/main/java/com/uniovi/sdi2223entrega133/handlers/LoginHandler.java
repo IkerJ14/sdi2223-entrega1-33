@@ -1,7 +1,7 @@
 package com.uniovi.sdi2223entrega133.handlers;
 
-import com.uniovi.sdi2223entrega133.services.RolesService;
-import com.uniovi.sdi2223entrega133.services.UserService;
+import com.uniovi.sdi2223entrega133.entities.*;
+import com.uniovi.sdi2223entrega133.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -20,6 +20,8 @@ import java.util.Date;
 public class LoginHandler implements AuthenticationSuccessHandler {
 
     @Autowired
+    private LogsService logService;
+    @Autowired
     private UserService usersService;
 
     @Autowired
@@ -29,9 +31,14 @@ public class LoginHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         String role = usersService.getUserByEmail(authentication.getName()).getRole();
-        if (role.equals(rolesService.getRoles()[0]))
+        Log log2 = new Log("LOGIN-EX", new Date(), "El usuario " + authentication.getName() + " se ha conectado");
+        if (role.equals(rolesService.getRoles()[0])) {
+            logService.addLog(log2);
             redirectStrategy.sendRedirect(request, response, "/offer/user_list");
-        else
+        }
+        else {
+            logService.addLog(log2);
             redirectStrategy.sendRedirect(request, response, "/user/list");
+        }
     }
 }
